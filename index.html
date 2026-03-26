@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnThi365 - Ôn thi mỗi ngày, đỗ đại học mỗi năm</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── Hero ── */
+.hero {
+  margin-top: var(--header-h);
+  background: linear-gradient(160deg, #F0F6FF 0%, #E6F0FF 40%, #F5F0FF 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,102,255,0.06) 0%, transparent 70%);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -100px; left: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,44,0.05) 0%, transparent 70%);
+}
+.hero-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 56px 20px 72px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  position: relative; z-index: 1;
+}
+@media (min-width: 768px) { .hero-inner { padding: 64px 32px 80px; } }
+
+.hero-content { animation: fadeUp 0.7s ease-out; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: var(--radius-full);
+  background: var(--brand-light); color: var(--brand);
+  font-size: 12px; font-weight: 700; margin-bottom: 20px;
+}
+.hero-badge .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--brand);
+  animation: pulse 2s infinite;
+}
+.hero h1 {
+  font-size: 40px; font-weight: 900; line-height: 1.15;
+  color: var(--gray-900); margin-bottom: 16px; letter-spacing: -0.5px;
+}
+@media (min-width: 768px) { .hero h1 { font-size: 48px; } }
+.hero h1 .highlight { color: var(--brand); }
+.hero h1 .accent { color: var(--accent); }
+.hero-desc {
+  font-size: 16px; line-height: 1.7; color: var(--gray-600);
+  margin-bottom: 32px; max-width: 460px;
+}
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-lg {
+  padding: 14px 28px; border-radius: var(--radius-md);
+  font-size: 15px; font-weight: 700; transition: all 0.3s var(--ease);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-lg.primary {
+  background: var(--brand); color: #fff;
+  box-shadow: var(--shadow-brand);
+}
+.btn-lg.primary:hover {
+  background: var(--brand-dark); transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,102,255,0.35);
+}
+.btn-lg.accent-fill {
+  background: var(--accent); color: #fff;
+}
+.btn-lg.accent-fill:hover {
+  background: var(--accent-dark); transform: translateY(-2px);
+}
+.btn-lg.outline {
+  background: #fff; color: var(--gray-700);
+  border: 1.5px solid var(--gray-200);
+}
+.btn-lg.outline:hover { border-color: var(--brand); color: var(--brand); }
+
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 40px;
+  padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.06);
+}
+.hero-stat strong { display: block; font-size: 26px; font-weight: 800; color: var(--brand); }
+.hero-stat span { font-size: 12px; color: var(--gray-400); font-weight: 500; }
+
+/* Slider */
+.hero-visual { position: relative; animation: fadeUp 0.8s ease-out 0.2s both; }
+.hero-slider {
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-xl); aspect-ratio: 4/3;
+  position: relative;
+}
+.slide { position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease; }
+.slide.active { opacity:1; }
+.slide-ph {
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  padding:24px;text-align:center;font-weight:700;font-size:18px;color:#fff;
+}
+.slider-dots { display:flex;gap:8px;justify-content:center;margin-top:16px; }
+.slider-dot {
+  width:8px;height:8px;border-radius:50%;background:var(--gray-300);
+  cursor:pointer;transition:all 0.3s;
+}
+.slider-dot.active { background:var(--brand);width:28px;border-radius:4px; }
+.hero-float {
+  position:absolute;background:#fff;border-radius:var(--radius-md);
+  padding:12px 16px;box-shadow:var(--shadow-lg);animation:float 3s ease-in-out infinite;
+}
+.hero-float.a { top:-8px;right:-16px; }
+.hero-float.b { bottom:40px;left:-24px;animation-delay:1.2s; }
+.hero-float .num { font-size:18px;font-weight:800;color:var(--brand); }
+.hero-float .lbl { font-size:11px;color:var(--gray-400); }
+
+/* Quick nav */
+.quick-nav { background: var(--white); border-bottom: 1px solid var(--gray-200); overflow: hidden; }
+.quick-nav-inner {
+  display: flex; max-width: var(--max-w); margin: 0 auto; padding: 0 20px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.quick-nav-inner::-webkit-scrollbar { display: none; }
+.quick-nav-link {
+  flex-shrink: 0; padding: 14px 24px;
+  font-size: 13px; font-weight: 600; color: var(--gray-500);
+  border-bottom: 2px solid transparent; transition: all 0.2s;
+  white-space: nowrap;
+}
+.quick-nav-link:hover { color: var(--brand); }
+.quick-nav-link.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+/* Social */
+.social-bar { padding: 20px 0; background: var(--gray-50); }
+.social-bar-inner {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  max-width: var(--max-w); margin: 0 auto; padding: 0 20px;
+}
+.social-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; background: #fff; border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200); font-size: 13px; font-weight: 500;
+  color: var(--gray-700); transition: all 0.2s;
+}
+.social-chip:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.social-chip .ico {
+  width: 32px; height: 32px; border-radius: 50%; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px;
+}
+
+/* Teachers scroll */
+.teachers-scroll {
+  display: flex; gap: 16px; overflow-x: auto;
+  scrollbar-width: none; padding: 8px 0;
+}
+.teachers-scroll::-webkit-scrollbar { display: none; }
+
+/* Commitments strip */
+.commit-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;
+}
+.commit-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 24px 20px; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); background: var(--white);
+  transition: all 0.3s var(--ease);
+}
+.commit-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: transparent; }
+.commit-icon {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.commit-text strong { display: block; font-size: 15px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; }
+.commit-text span { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+
+/* Why us */
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.why-card {
+  padding: 28px 24px; border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); background: var(--white);
+  transition: all 0.3s var(--ease);
+}
+.why-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: transparent; }
+.why-icon {
+  width: 48px; height: 48px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 16px;
+}
+.why-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--gray-900); }
+.why-card p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
+
+/* CTA bottom */
+.blog-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;
+}
+.blog-card { display:flex;flex-direction:column; }
+.blog-thumb { aspect-ratio:16/10;overflow:hidden;position:relative; }
+.blog-thumb-ph {
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:#fff;padding:16px;text-align:center;
+  transition:transform 0.4s var(--ease);
+}
+.blog-card:hover .blog-thumb-ph { transform:scale(1.05); }
+.blog-body { padding:16px;flex:1;display:flex;flex-direction:column; }
+.blog-cat { margin-bottom:10px;align-self:flex-start; }
+.blog-title {
+  font-size:15px;font-weight:700;line-height:1.45;color:var(--gray-900);
+  margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.blog-excerpt {
+  font-size:13px;color:var(--gray-500);line-height:1.6;flex:1;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:10px;
+}
+.blog-meta-row {
+  display:flex;gap:6px;font-size:12px;color:var(--gray-400);
+}
+
+/* Arena light cards (homepage) */
+.arena-card-light {
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md); padding: 22px;
+  transition: all 0.3s var(--ease); display: flex; flex-direction: column;
+}
+.arena-card-light:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: transparent; }
+.acl-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.acl-subject { font-size: 12px; font-weight: 700; }
+.acl-title { font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 12px; flex: 1; }
+.acl-meta { display: flex; gap: 14px; font-size: 12px; color: var(--gray-400); margin-bottom: 14px; }
+.acl-btn {
+  display: inline-flex; align-self: flex-start;
+  padding: 7px 16px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; color: var(--brand);
+  background: var(--brand-light); transition: all 0.2s;
+}
+.arena-card-light:hover .acl-btn { background: var(--brand); color: #fff; }
+
+.cta-banner {
+  padding: 64px 0; text-align: center;
+  background: linear-gradient(135deg, var(--brand) 0%, #0050CC 100%);
+  color: #fff; position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content:'';position:absolute;top:-50%;right:-20%;width:500px;height:500px;
+  border-radius:50%;background:rgba(255,255,255,0.05);
+}
+.cta-banner h2 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+.cta-banner p { font-size: 16px; opacity: 0.8; margin-bottom: 28px; max-width: 500px; margin-inline: auto; }
+.cta-banner .btn-lg { background: #fff; color: var(--brand); font-weight: 700; }
+.cta-banner .btn-lg:hover { box-shadow: var(--shadow-xl); transform: translateY(-2px); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-desc { margin-inline: auto; }
+  .hero-ctas { justify-content: center; }
+  .hero-stats { justify-content: center; }
+  .hero-visual { max-width: 480px; margin: 0 auto; }
+  .hero-float { display: none; }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 28px; }
+  .hero-stats { gap: 20px; }
+  .hero-stat strong { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dang-nhap.html" class="btn-brand">Đăng nhập</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link active">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link">Khóa học</a>
+    <a href="thi-online.html" class="sub-link">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link">Bài viết</a>
+    <a href="dashboard.html" class="sub-link">Lớp học của tôi</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> Nền tảng học trực tuyến #1</div>
+      <h1>Học đều. Thi chắc.<br><span class="highlight">Đỗ đại học</span> <span class="accent">mỗi năm</span></h1>
+      <p class="hero-desc">Hệ thống khóa học chất lượng cao, đề thi online miễn phí và đấu trường lý thuyết — giúp học sinh THPT tự tin chinh phục mọi kỳ thi.</p>
+      <div class="hero-ctas">
+        <a href="khoa-hoc.html" class="btn-lg primary">
+          Xem khóa học
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+        </a>
+        <a href="thi-online.html" class="btn-lg outline">Thi thử miễn phí</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>50K+</strong><span>Học sinh</span></div>
+        <div class="hero-stat"><strong>200+</strong><span>Khóa học</span></div>
+        <div class="hero-stat"><strong>20+</strong><span>Giáo viên</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-slider" id="heroSlider">
+        <div class="slide active"><div class="slide-ph grad-1">Khóa luyện thi THPT 2K8</div></div>
+        <div class="slide"><div class="slide-ph grad-2">Luyện đề THPT Quốc gia 2026</div></div>
+        <div class="slide"><div class="slide-ph grad-4">Đấu trường lý thuyết</div></div>
+        <div class="slide"><div class="slide-ph grad-3">Sách bài tập online</div></div>
+      </div>
+      <div class="slider-dots" id="dots">
+        <span class="slider-dot active" data-i="0"></span>
+        <span class="slider-dot" data-i="1"></span>
+        <span class="slider-dot" data-i="2"></span>
+        <span class="slider-dot" data-i="3"></span>
+      </div>
+      <div class="hero-float a"><div class="num">9.5</div><div class="lbl">Đánh giá TB</div></div>
+      <div class="hero-float b"><div class="num">98%</div><div class="lbl">Hài lòng</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK NAV -->
+<div class="quick-nav">
+  <div class="quick-nav-inner">
+    <a href="index.html" class="quick-nav-link active">Trang chủ</a>
+    <a href="khoa-hoc.html" class="quick-nav-link">Khóa học</a>
+    <a href="thi-online.html" class="quick-nav-link">Thi online</a>
+    <a href="dau-truong.html" class="quick-nav-link">Đấu trường lý thuyết</a>
+    <a href="tai-lieu.html" class="quick-nav-link">Tài liệu</a>
+  </div>
+</div>
+
+<!-- SOCIAL BAR -->
+<div class="social-bar">
+  <div class="social-bar-inner">
+    <a href="#" class="social-chip"><span class="ico" style="background:#1877F2">f</span> Facebook OnThi365</a>
+    <a href="#" class="social-chip"><span class="ico" style="background:#FF0000">▶</span> Youtube OnThi365</a>
+    <a href="#" class="social-chip"><span class="ico" style="background:#000">T</span> TikTok OnThi365</a>
+    <a href="#" class="social-chip"><span class="ico" style="background:#0084FF">✉</span> Messenger hỗ trợ</a>
+  </div>
+</div>
+
+<!-- COMMITMENTS STRIP -->
+<section class="section" id="commitments">
+  <div class="container">
+    <div class="commit-grid">
+      <div class="commit-card">
+        <div class="commit-icon" style="background:var(--brand-light)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="commit-text">
+          <strong>Hỗ trợ 24/7</strong>
+          <span>Giải đáp thắc mắc bất kỳ lúc nào qua Messenger, Zalo</span>
+        </div>
+      </div>
+      <div class="commit-card">
+        <div class="commit-icon" style="background:var(--success-light)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M12 2v4m0 12v4m10-10h-4M6 12H2m15.07-5.07-2.83 2.83M8.76 15.24l-2.83 2.83m11.14 0-2.83-2.83M8.76 8.76 5.93 5.93"/></svg>
+        </div>
+        <div class="commit-text">
+          <strong>Cập nhật liên tục</strong>
+          <span>Khóa học mới, đề thi mới được bổ sung hàng tuần</span>
+        </div>
+      </div>
+      <div class="commit-card">
+        <div class="commit-icon" style="background:var(--accent-light)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <div class="commit-text">
+          <strong>Chấm điểm tự động</strong>
+          <span>Nộp bài → hệ thống chấm điểm + phân tích ngay lập tức</span>
+        </div>
+      </div>
+      <div class="commit-card">
+        <div class="commit-icon" style="background:#F5F3FF">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+        </div>
+        <div class="commit-text">
+          <strong>Học mọi lúc mọi nơi</strong>
+          <span>Điện thoại, máy tính bảng, laptop — đều xem được</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES PREVIEW -->
+<section class="section alt" id="courses">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Khóa học nổi bật</h2>
+      <a href="khoa-hoc.html" class="section-link">Xem tất cả</a>
+    </div>
+    <div class="tabs" style="margin-bottom:24px">
+      <button class="tab active">2K8</button>
+      <button class="tab">2K9</button>
+      <button class="tab">2K10</button>
+      <button class="tab">2K11</button>
+    </div>
+    <div class="courses-grid">
+      <a href="chi-tiet-khoa-hoc.html" class="card course-card">
+        <div class="thumb"><div class="thumb-placeholder grad-1">Chuyên đề cơ bản Vật lý 2026</div><span class="thumb-badge">Vật lý</span></div>
+        <div class="body">
+          <div class="title">KHOÁ I - CHUYÊN ĐỀ CƠ BẢN MÔN VẬT LÝ 2026</div>
+          <div class="meta"><span class="avatar-mini">VA</span>Thầy Vũ Ngọc Anh</div>
+          <div class="price-row"><div><span class="price">499.000đ</span><span class="price-old">990.000đ</span></div><span class="btn-enroll">Xem chi tiết</span></div>
+        </div>
+      </a>
+      <a href="chi-tiet-khoa-hoc.html" class="card course-card">
+        <div class="thumb"><div class="thumb-placeholder grad-6">Vận dụng cao Toán 2026</div><span class="thumb-badge">Toán</span></div>
+        <div class="body">
+          <div class="title">KHOÁ M - VẬN DỤNG VÀ VẬN DỤNG CAO TOÁN 2026</div>
+          <div class="meta"><span class="avatar-mini">NM</span>Thầy Nguyễn Thành Nam</div>
+          <div class="price-row"><div><span class="price">599.000đ</span><span class="price-old">1.200.000đ</span></div><span class="btn-enroll">Xem chi tiết</span></div>
+        </div>
+      </a>
+      <a href="chi-tiet-khoa-hoc.html" class="card course-card">
+        <div class="thumb"><div class="thumb-placeholder grad-3">Thực chiến luyện đề Hóa 2026</div><span class="thumb-badge">Hóa</span></div>
+        <div class="body">
+          <div class="title">KHOÁ O - THỰC CHIẾN LUYỆN ĐỀ HÓA HỌC 2026</div>
+          <div class="meta"><span class="avatar-mini">CN</span>Thầy Chí Nhân</div>
+          <div class="price-row"><div><span class="price">399.000đ</span><span class="price-old">800.000đ</span></div><span class="btn-enroll">Xem chi tiết</span></div>
+        </div>
+      </a>
+      <a href="chi-tiet-khoa-hoc.html" class="card course-card">
+        <div class="thumb"><div class="thumb-placeholder grad-5">Tổng ôn Tiếng Anh 2026</div><span class="thumb-badge">Tiếng Anh</span></div>
+        <div class="body">
+          <div class="title">KHOÁ E - TỔNG ÔN TRỌNG ĐIỂM TIẾNG ANH 2026</div>
+          <div class="meta"><span class="avatar-mini">KN</span>Cô Kim Ngân</div>
+          <div class="price-row"><div><span class="price">449.000đ</span><span class="price-old">900.000đ</span></div><span class="btn-enroll">Xem chi tiết</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMS PREVIEW -->
+<section class="section" id="exams">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Thi online miễn phí</h2>
+      <a href="thi-online.html" class="section-link">Xem tất cả</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px">
+      <a href="xac-nhan-thi.html" class="exam-card subj-ly"><div class="exam-icon">Lý</div><div class="exam-info"><div class="exam-name">L11014 - Đề kiểm tra vật lí 11 - Đề 26</div><div class="exam-details"><span class="tag tag-brand">THPT</span><span>50 phút</span><span>896 lượt</span></div></div></a>
+      <a href="xac-nhan-thi.html" class="exam-card subj-toan"><div class="exam-icon">T</div><div class="exam-info"><div class="exam-name">ĐỀ DỰ ĐOÁN SỐ 01 - KỲ THI ĐGNL HSA</div><div class="exam-details"><span class="tag tag-accent">HSA</span><span>195 phút</span><span>10,418 lượt</span></div></div></a>
+      <a href="xac-nhan-thi.html" class="exam-card subj-hoa"><div class="exam-icon">H</div><div class="exam-info"><div class="exam-name">ĐỀ DỰ ĐOÁN SỐ 01 - KỲ THI ĐGNL VACT</div><div class="exam-details"><span class="tag tag-accent">V-ACT</span><span>150 phút</span><span>4,987 lượt</span></div></div></a>
+      <a href="xac-nhan-thi.html" class="exam-card subj-anh"><div class="exam-icon">A</div><div class="exam-info"><div class="exam-name">Đề thi thử Tiếng Anh THPT 2026 - Đề 15</div><div class="exam-details"><span class="tag tag-brand">THPT</span><span>60 phút</span><span>2,341 lượt</span></div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ARENA PREVIEW -->
+<section class="section alt" id="arena">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Đấu trường lý thuyết</h2>
+      <a href="dau-truong.html" class="section-link">Xem tất cả</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+      <a href="xac-nhan-dau-truong.html" class="arena-card-light">
+        <div class="acl-top"><span class="arena-status open">Đang mở</span><span class="acl-subject subj-ly" style="color:var(--subj)">Vật lý</span></div>
+        <div class="acl-title">Tinh hoa lý thuyết Vật lý</div>
+        <div class="acl-meta"><span>📅 14/03 – 29/06</span><span>❓ 30 câu</span><span>👥 515</span></div>
+        <div class="acl-btn">Tham gia →</div>
+      </a>
+      <a href="xac-nhan-dau-truong.html" class="arena-card-light">
+        <div class="acl-top"><span class="arena-status open">Đang mở</span><span class="acl-subject subj-ly" style="color:var(--subj)">Vật lý</span></div>
+        <div class="acl-title">Đấu trường lý thuyết – Phần 3</div>
+        <div class="acl-meta"><span>📅 01/03 – 29/06</span><span>❓ 30 câu</span><span>👥 5,794</span></div>
+        <div class="acl-btn">Tham gia →</div>
+      </a>
+      <a href="xac-nhan-dau-truong.html" class="arena-card-light">
+        <div class="acl-top"><span class="arena-status open">Đang mở</span><span class="acl-subject subj-ly" style="color:var(--subj)">Vật lý</span></div>
+        <div class="acl-title">Đấu trường tốc độ – Chơi thử</div>
+        <div class="acl-meta"><span>📅 31/01 – 29/06</span><span>❓ 30 câu</span><span>👥 6,081</span></div>
+        <div class="acl-btn">Tham gia →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section alt">
+  <div class="container">
+    <h2 class="section-title" style="margin-bottom:32px">Tại sao chọn OnThi365?</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon" style="background:var(--brand-light);color:var(--brand)">📹</div>
+        <h3>Video bài giảng HD</h3>
+        <p>Bài giảng chất lượng cao, giải thích dễ hiểu, xem lại không giới hạn.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" style="background:var(--accent-light);color:var(--accent)">📝</div>
+        <h3>Thi online miễn phí</h3>
+        <p>Hàng trăm đề thi chuẩn cấu trúc, chấm tự động, phân tích kết quả chi tiết.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" style="background:var(--success-light);color:var(--success)">🏆</div>
+        <h3>Đấu trường gamification</h3>
+        <p>Thi đấu cùng bạn bè, leo bảng xếp hạng, học mà chơi — chơi mà học.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" style="background:#F5F3FF;color:#7C3AED">👨‍🏫</div>
+        <h3>Giáo viên top đầu</h3>
+        <p>Đội ngũ giáo viên kinh nghiệm 10+ năm luyện thi, đã đào tạo hàng nghìn học sinh đỗ ĐH.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG / BÀI VIẾT SEO -->
+<section class="section" id="blog">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Bài viết & Kiến thức</h2>
+      <a href="bai-viet.html" class="section-link">Xem tất cả</a>
+    </div>
+    <div class="blog-grid">
+      <a href="chi-tiet-bai-viet.html" class="blog-card card">
+        <div class="blog-thumb"><div class="blog-thumb-ph grad-1">Kinh nghiệm ôn thi</div></div>
+        <div class="blog-body">
+          <div class="blog-cat tag tag-brand">Kinh nghiệm</div>
+          <h3 class="blog-title">Lộ trình ôn thi THPT Quốc gia 2026 hiệu quả trong 6 tháng</h3>
+          <p class="blog-excerpt">Hướng dẫn chi tiết cách phân bổ thời gian, chọn tài liệu và phương pháp ôn thi khoa học giúp đạt 8+ điểm...</p>
+          <div class="blog-meta-row"><span>22/03/2026</span><span>·</span><span>5 phút đọc</span><span>·</span><span>12,340 lượt xem</span></div>
+        </div>
+      </a>
+      <a href="chi-tiet-bai-viet.html" class="blog-card card">
+        <div class="blog-thumb"><div class="blog-thumb-ph grad-3">Mẹo học Vật lý</div></div>
+        <div class="blog-body">
+          <div class="blog-cat tag tag-accent">Vật lý</div>
+          <h3 class="blog-title">Top 10 công thức Vật lý 12 quan trọng nhất trong đề thi THPT</h3>
+          <p class="blog-excerpt">Tổng hợp những công thức xuất hiện nhiều nhất qua 5 năm đề thi, kèm ví dụ áp dụng thực tế...</p>
+          <div class="blog-meta-row"><span>20/03/2026</span><span>·</span><span>8 phút đọc</span><span>·</span><span>8,921 lượt xem</span></div>
+        </div>
+      </a>
+      <a href="chi-tiet-bai-viet.html" class="blog-card card">
+        <div class="blog-thumb"><div class="blog-thumb-ph grad-5">So sánh kỳ thi</div></div>
+        <div class="blog-body">
+          <div class="blog-cat tag tag-gray">Tư vấn</div>
+          <h3 class="blog-title">So sánh ĐGNL (HSA) và ĐGTD (TSA): Nên thi kỳ nào năm 2026?</h3>
+          <p class="blog-excerpt">Phân tích chi tiết cấu trúc đề, độ khó, cơ hội xét tuyển và chiến lược ôn luyện cho từng kỳ thi...</p>
+          <div class="blog-meta-row"><span>18/03/2026</span><span>·</span><span>6 phút đọc</span><span>·</span><span>15,678 lượt xem</span></div>
+        </div>
+      </a>
+      <a href="chi-tiet-bai-viet.html" class="blog-card card">
+        <div class="blog-thumb"><div class="blog-thumb-ph grad-6">Toán học</div></div>
+        <div class="blog-body">
+          <div class="blog-cat tag tag-warning">Toán</div>
+          <h3 class="blog-title">Phương pháp giải nhanh bài toán hàm số bằng máy tính Casio</h3>
+          <p class="blog-excerpt">Bỏ túi 5 kỹ thuật bấm máy giúp giải bài hàm số trong 30 giây, kèm bài tập áp dụng...</p>
+          <div class="blog-meta-row"><span>15/03/2026</span><span>·</span><span>7 phút đọc</span><span>·</span><span>6,543 lượt xem</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="container" style="position:relative;z-index:1">
+    <h2>Sẵn sàng chinh phục kỳ thi?</h2>
+    <p>Bắt đầu ngay hôm nay — xem thử khóa học miễn phí, thi online miễn phí, không cần đăng ký.</p>
+    <a href="khoa-hoc.html" class="btn-lg" style="background:#fff;color:var(--brand)">Khám phá khóa học →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div>
+        <p class="footer-desc">OnThi365 — Học đều. Thi chắc. Đỗ đại học mỗi năm. Nền tảng học trực tuyến hàng đầu Việt Nam.</p>
+        <div class="footer-contact">📍 Hà Nội, Việt Nam</div>
+        <div class="footer-contact">📧 info@onthi365.vn</div>
+        <div class="footer-contact">📞 0978.xxx.xxx</div>
+      </div>
+      <div>
+        <h4>Thông tin</h4>
+        <div class="footer-links">
+          <a href="#">Giới thiệu</a>
+          <a href="#">Câu hỏi thường gặp</a>
+          <a href="#">Điều khoản dịch vụ</a>
+          <a href="#">Chính sách bảo mật</a>
+        </div>
+      </div>
+      <div>
+        <h4>Khám phá</h4>
+        <div class="footer-links">
+          <a href="khoa-hoc.html">Khóa học</a>
+          <a href="thi-online.html">Thi online</a>
+          <a href="dau-truong.html">Đấu trường</a>
+          <a href="bai-viet.html">Bài viết</a>
+          <a href="tai-lieu.html">Tài liệu</a>
+        </div>
+      </div>
+      <div>
+        <h4>Nhận thông báo mới</h4>
+        <div class="footer-newsletter"><input placeholder="Email của bạn"><button>Gửi</button></div>
+        <div class="footer-social">
+          <a href="#">f</a><a href="#">▶</a><a href="#">T</a><a href="#">✉</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- FLOATING -->
+<div class="float-btns">
+  <a href="#" class="float-btn messenger">✉</a>
+  <a href="#" class="float-btn phone">📞</a>
+</div>
+
+<script>
+// Header scroll
+const h=document.getElementById('header');
+window.addEventListener('scroll',()=>h.classList.toggle('scrolled',scrollY>10));
+
+// Slider
+const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.slider-dot');
+let cur=0,timer;
+function go(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');dots[cur].classList.add('active')}
+function next(){go((cur+1)%slides.length)}
+function start(){timer=setInterval(next,4000)}
+dots.forEach(d=>d.addEventListener('click',()=>{clearInterval(timer);go(+d.dataset.i);start()}));
+start();
+
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelector('.tab.active')?.classList.remove('active');t.classList.add('active')}));
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}}),{threshold:0.08});
+document.querySelectorAll('.card,.exam-card,.arena-card,.why-card,.commit-card,.blog-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity 0.5s ease,transform 0.5s ease';obs.observe(el)});
+</script>
+</body>
+</html>

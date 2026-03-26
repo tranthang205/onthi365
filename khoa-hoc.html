@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khóa học - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main { margin-top: var(--header-h); }
+
+/* Page header */
+.page-hero {
+  background: linear-gradient(135deg, #F0F6FF, #E6F0FF);
+  padding: 40px 0 32px;
+}
+.page-hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+.page-hero p { color: var(--gray-500); font-size: 15px; }
+
+/* Sidebar + content */
+.page-layout {
+  display: grid; grid-template-columns: 240px 1fr; gap: 32px;
+  padding: 32px 0 80px;
+}
+
+/* Sidebar filters */
+.sidebar { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; }
+.filter-group { margin-bottom: 24px; }
+.filter-group h3 {
+  font-size: 13px; font-weight: 700; color: var(--gray-900);
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;
+}
+.filter-option {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 0; font-size: 14px; color: var(--gray-600); cursor: pointer;
+  transition: color 0.2s;
+}
+.filter-option:hover { color: var(--brand); }
+.filter-option input[type="checkbox"] {
+  width: 16px; height: 16px; accent-color: var(--brand);
+}
+.filter-option.active { color: var(--brand); font-weight: 600; }
+
+/* Search */
+.search-bar {
+  display: flex; gap: 8px; margin-bottom: 24px;
+}
+.search-input {
+  flex: 1; padding: 10px 14px; border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm); font-size: 14px; background: var(--white);
+  transition: border-color 0.2s;
+}
+.search-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0,102,255,0.08); }
+.search-btn {
+  padding: 10px 20px; border-radius: var(--radius-sm);
+  background: var(--brand); color: #fff; font-size: 14px; font-weight: 600;
+}
+
+/* Category cards */
+.categories { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+.cat-chip {
+  padding: 8px 16px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 600; color: var(--gray-600);
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  transition: all 0.2s;
+}
+.cat-chip:hover { border-color: var(--brand); color: var(--brand); }
+.cat-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+/* Course count */
+.results-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px; font-size: 14px; color: var(--gray-500);
+}
+.results-bar strong { color: var(--gray-800); }
+.sort-select {
+  padding: 7px 12px; border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
+  font-size: 13px; color: var(--gray-600); background: var(--white);
+}
+
+/* Pagination */
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; margin-top: 40px;
+}
+.page-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: var(--gray-600);
+  border: 1px solid var(--gray-200); transition: all 0.2s;
+}
+.page-btn:hover { border-color: var(--brand); color: var(--brand); }
+.page-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+@media (max-width: 900px) {
+  .page-layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; display: flex; gap: 16px; flex-wrap: wrap; }
+  .filter-group { margin-bottom: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dang-nhap.html" class="btn-brand">Đăng nhập</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link active">Khóa học</a>
+    <a href="thi-online.html" class="sub-link">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link">Bài viết</a>
+    <a href="dashboard.html" class="sub-link">Lớp học của tôi</a>
+  </div>
+</header>
+
+<main>
+  <!-- Page hero -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>Tất cả khóa học</h1>
+      <p>Hơn 200 khóa học chất lượng cao cho học sinh lớp 10, 11, 12</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Categories -->
+    <div class="categories" style="margin-top:24px">
+      <button class="cat-chip active">Tất cả</button>
+      <button class="cat-chip">2K8 - Lớp 12</button>
+      <button class="cat-chip">2K9 - Lớp 11</button>
+      <button class="cat-chip">2K10 - Lớp 10</button>
+      <button class="cat-chip">2K11 - Lớp 9</button>
+      <button class="cat-chip">ĐGNL & ĐGTD</button>
+      <button class="cat-chip">Xuất phát sớm</button>
+      <button class="cat-chip">Sách MapBook</button>
+    </div>
+
+    <div class="page-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="filter-group">
+          <h3>Môn học</h3>
+          <label class="filter-option"><input type="checkbox"> Toán</label>
+          <label class="filter-option"><input type="checkbox"> Vật lý</label>
+          <label class="filter-option"><input type="checkbox"> Hóa học</label>
+          <label class="filter-option"><input type="checkbox"> Sinh học</label>
+          <label class="filter-option"><input type="checkbox"> Tiếng Anh</label>
+          <label class="filter-option"><input type="checkbox"> Ngữ văn</label>
+        </div>
+        <div class="filter-group">
+          <h3>Giáo viên</h3>
+          <label class="filter-option"><input type="checkbox"> Thầy Vũ Ngọc Anh</label>
+          <label class="filter-option"><input type="checkbox"> Thầy Nguyễn Thành Nam</label>
+          <label class="filter-option"><input type="checkbox"> Thầy Chí Nhân</label>
+          <label class="filter-option"><input type="checkbox"> Cô Kim Ngân</label>
+        </div>
+        <div class="filter-group">
+          <h3>Mức giá</h3>
+          <label class="filter-option"><input type="checkbox"> Miễn phí</label>
+          <label class="filter-option"><input type="checkbox"> Dưới 500K</label>
+          <label class="filter-option"><input type="checkbox"> 500K - 1 triệu</label>
+          <label class="filter-option"><input type="checkbox"> Trên 1 triệu</label>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <div>
+        <div class="search-bar">
+          <input class="search-input" placeholder="Tìm khóa học...">
+          <button class="search-btn">Tìm kiếm</button>
+        </div>
+
+        <div class="results-bar">
+          <span>Hiển thị <strong>1-12</strong> trong <strong>86</strong> khóa học</span>
+          <select class="sort-select">
+            <option>Mới nhất</option>
+            <option>Phổ biến nhất</option>
+            <option>Giá thấp → cao</option>
+            <option>Giá cao → thấp</option>
+          </select>
+        </div>
+
+        <div class="courses-grid">
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-1">Chuyên đề cơ bản Vật lý</div><span class="thumb-badge">Vật lý</span></div><div class="body"><div class="title">KHOÁ I - CHUYÊN ĐỀ CƠ BẢN VẬT LÝ 2026</div><div class="meta"><span class="avatar-mini">VA</span>Thầy Vũ Ngọc Anh</div><div class="price-row"><div><span class="price">499.000đ</span><span class="price-old">990.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-6">Vận dụng cao Toán</div><span class="thumb-badge">Toán</span></div><div class="body"><div class="title">KHOÁ M - VẬN DỤNG VÀ VẬN DỤNG CAO TOÁN 2026</div><div class="meta"><span class="avatar-mini">NM</span>Thầy Thành Nam</div><div class="price-row"><div><span class="price">599.000đ</span><span class="price-old">1.200.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-3">Thực chiến Hóa</div><span class="thumb-badge">Hóa</span></div><div class="body"><div class="title">KHOÁ O - THỰC CHIẾN LUYỆN ĐỀ HÓA HỌC 2026</div><div class="meta"><span class="avatar-mini">CN</span>Thầy Chí Nhân</div><div class="price-row"><div><span class="price">399.000đ</span><span class="price-old">800.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-5">Tổng ôn Tiếng Anh</div><span class="thumb-badge">Tiếng Anh</span></div><div class="body"><div class="title">KHOÁ E - TỔNG ÔN TRỌNG ĐIỂM TIẾNG ANH 2026</div><div class="meta"><span class="avatar-mini">KN</span>Cô Kim Ngân</div><div class="price-row"><div><span class="price">449.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-4">Chuyên đề Sinh học</div><span class="thumb-badge">Sinh</span></div><div class="body"><div class="title">KHOÁ I - CHUYÊN ĐỀ CƠ BẢN SINH HỌC 2026</div><div class="meta"><span class="avatar-mini">MK</span>Thầy Minh Kiên</div><div class="price-row"><div><span class="price">399.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-2">50 đề minh họa Anh</div><span class="thumb-badge">Tiếng Anh</span></div><div class="body"><div class="title">KHÓA 50 ĐỀ MINH HỌA TIẾNG ANH 2026</div><div class="meta"><span class="avatar-mini">GV</span>Đội ngũ GV</div><div class="price-row"><div><span class="price">299.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-1">Super Live hàng tuần</div><span class="thumb-badge">Tất cả</span></div><div class="body"><div class="title">SUPER LIVE CHỮA ĐỀ HÀNG TUẦN</div><div class="meta"><span class="avatar-mini">GV</span>Đội ngũ GV</div><div class="price-row"><div><span class="price tag-success" style="background:var(--success-light);padding:2px 8px;border-radius:4px;font-size:13px">Miễn phí</span></div><span class="btn-enroll">Xem</span></div></div></a>
+          <a href="chi-tiet-khoa-hoc.html" class="card course-card"><div class="thumb"><div class="thumb-placeholder grad-3">Ngữ văn nền tảng</div><span class="thumb-badge">Văn</span></div><div class="body"><div class="title">KHOÁ I - HỌC NỀN TẢNG VÀ KỸ NĂNG NGỮ VĂN 2027</div><div class="meta"><span class="avatar-mini">VĂ</span>Tổ Ngữ văn</div><div class="price-row"><div><span class="price">549.000đ</span></div><span class="btn-enroll">Xem</span></div></div></a>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">4</button>
+          <button class="page-btn">...</button>
+          <button class="page-btn">12</button>
+          <button class="page-btn">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div><p class="footer-desc">OnThi365 — Ôn thi mỗi ngày, đỗ đại học mỗi năm.</p></div>
+      <div><h4>Thông tin</h4><div class="footer-links"><a href="#">Giới thiệu</a><a href="#">Điều khoản</a><a href="#">Bảo mật</a></div></div>
+      <div><h4>Khám phá</h4><div class="footer-links"><a href="khoa-hoc.html">Khóa học</a><a href="thi-online.html">Thi online</a><a href="dau-truong.html">Đấu trường</a></div></div>
+      <div><h4>Nhận thông báo</h4><div class="footer-newsletter"><input placeholder="Email"><button>Gửi</button></div></div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.cat-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelector('.cat-chip.active')?.classList.remove('active');c.classList.add('active')}));
+document.querySelectorAll('.page-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelector('.page-btn.active')?.classList.remove('active');b.classList.add('active')}));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}}),{threshold:0.05});
+document.querySelectorAll('.card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity 0.4s,transform 0.4s';obs.observe(el)});
+</script>
+</body>
+</html>

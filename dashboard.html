@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lớp học của tôi - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main { margin-top: var(--header-h); padding: 32px 0 80px; }
+
+/* Welcome bar */
+.welcome {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-radius: var(--radius-lg); padding: 28px 32px;
+  color: #fff; display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 28px; gap: 20px; flex-wrap: wrap;
+}
+.welcome-left h1 { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.welcome-left p { font-size: 14px; opacity: 0.75; }
+.welcome-stats { display: flex; gap: 24px; }
+.w-stat { text-align: center; }
+.w-stat .val { font-size: 24px; font-weight: 800; }
+.w-stat .lbl { font-size: 11px; opacity: 0.6; }
+
+/* Dashboard tabs */
+.dash-tabs { display:flex;gap:4px;margin-bottom:24px;border-bottom:2px solid var(--gray-100);padding-bottom:0; }
+.dash-tab {
+  padding:10px 20px;font-size:14px;font-weight:600;color:var(--gray-500);
+  border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:all 0.2s;
+}
+.dash-tab:hover { color:var(--gray-700); }
+.dash-tab.active { color:var(--brand);border-bottom-color:var(--brand); }
+
+/* My courses grid */
+.my-courses { display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px; }
+.my-course {
+  display:flex;gap:16px;padding:20px;background:var(--white);
+  border-radius:var(--radius-md);border:1px solid var(--gray-200);transition:all 0.2s;
+}
+.my-course:hover { box-shadow:var(--shadow-md);border-color:var(--brand); }
+.my-course-thumb {
+  width:90px;height:68px;border-radius:var(--radius-sm);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;text-align:center;padding:4px;
+}
+.my-course-info { flex:1;min-width:0; }
+.my-course-title {
+  font-size:14px;font-weight:600;color:var(--gray-800);margin-bottom:6px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.my-course-teacher { font-size:12px;color:var(--gray-400);margin-bottom:10px; }
+.my-course-progress { display:flex;align-items:center;gap:8px; }
+.progress-bar-sm { flex:1;height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden; }
+.progress-bar-sm .fill { height:100%;border-radius:3px;background:var(--brand);transition:width 0.5s; }
+.progress-pct { font-size:12px;font-weight:700;color:var(--brand);min-width:32px;text-align:right; }
+.my-course-btn {
+  margin-top:10px;display:inline-flex;padding:6px 14px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:600;color:#fff;background:var(--brand);transition:all 0.2s;
+}
+.my-course-btn:hover { background:var(--brand-dark); }
+
+/* Empty state */
+.empty-state {
+  text-align:center;padding:60px 20px;background:var(--white);
+  border-radius:var(--radius-lg);border:2px dashed var(--gray-200);
+}
+.empty-state .icon { font-size:48px;margin-bottom:16px;opacity:0.3; }
+.empty-state h3 { font-size:18px;font-weight:700;color:var(--gray-600);margin-bottom:8px; }
+.empty-state p { font-size:14px;color:var(--gray-400);margin-bottom:20px; }
+.empty-state .btn-explore {
+  display:inline-flex;padding:10px 24px;border-radius:var(--radius-sm);
+  background:var(--brand);color:#fff;font-size:14px;font-weight:600;
+  gap:6px;align-items:center;transition:all 0.2s;
+}
+.empty-state .btn-explore:hover { background:var(--brand-dark); }
+
+/* History */
+.history-list { display:flex;flex-direction:column;gap:10px; }
+.history-item {
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  background:var(--white);border-radius:var(--radius-md);border:1px solid var(--gray-200);
+  transition:all 0.2s;
+}
+.history-item:hover { box-shadow:var(--shadow-sm); }
+.history-icon {
+  width:40px;height:40px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;
+}
+.history-info { flex:1;min-width:0; }
+.history-name { font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.history-detail { font-size:12px;color:var(--gray-400); }
+.history-score { font-size:18px;font-weight:800;text-align:right; }
+.history-score.good { color:var(--success); }
+.history-score.mid { color:var(--warning); }
+.history-score.low { color:var(--danger); }
+.history-date { font-size:11px;color:var(--gray-300);text-align:right; }
+
+/* Tab panels */
+.tab-panel { display:none; }
+.tab-panel.active { display:block;animation:fadeUp 0.3s ease-out; }
+
+@media(max-width:600px) {
+  .welcome { flex-direction:column;text-align:center; }
+  .my-courses { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER (logged in state) -->
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dashboard.html" class="header-user"><div class="avatar">NH</div>Nguyễn Huy</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link">Khóa học</a>
+    <a href="thi-online.html" class="sub-link">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link">Bài viết</a>
+    <a href="dashboard.html" class="sub-link active">Lớp học của tôi</a>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <!-- Welcome -->
+    <div class="welcome">
+      <div class="welcome-left">
+        <h1>Xin chào, Nguyễn Huy!</h1>
+        <p>Tiếp tục hành trình ôn thi của bạn nhé · <a href="cai-dat.html" style="color:rgba(255,255,255,0.7);text-decoration:underline">Cài đặt tài khoản</a></p>
+      </div>
+      <div class="welcome-stats">
+        <div class="w-stat"><div class="val">3</div><div class="lbl">Khóa học</div></div>
+        <div class="w-stat"><div class="val">12</div><div class="lbl">Đề đã thi</div></div>
+        <div class="w-stat"><div class="val">7.8</div><div class="lbl">Điểm TB</div></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="dash-tabs">
+      <div class="dash-tab active" data-tab="courses">Khóa học của tôi</div>
+      <div class="dash-tab" data-tab="history">Lịch sử thi</div>
+      <div class="dash-tab" data-tab="arena-history">Đấu trường</div>
+    </div>
+
+    <!-- Tab: Khóa học -->
+    <div class="tab-panel active" id="courses">
+      <div class="my-courses">
+        <a href="hoc-bai.html" class="my-course">
+          <div class="my-course-thumb grad-1">Vật lý</div>
+          <div class="my-course-info">
+            <div class="my-course-title">KHOÁ I - CHUYÊN ĐỀ CƠ BẢN VẬT LÝ 2026</div>
+            <div class="my-course-teacher">Thầy Vũ Ngọc Anh</div>
+            <div class="my-course-progress">
+              <div class="progress-bar-sm"><div class="fill" style="width:65%"></div></div>
+              <span class="progress-pct">65%</span>
+            </div>
+            <span class="my-course-btn">Tiếp tục học →</span>
+          </div>
+        </a>
+        <a href="hoc-bai.html" class="my-course">
+          <div class="my-course-thumb grad-6">Toán</div>
+          <div class="my-course-info">
+            <div class="my-course-title">KHOÁ M - VẬN DỤNG VÀ VẬN DỤNG CAO TOÁN 2026</div>
+            <div class="my-course-teacher">Thầy Nguyễn Thành Nam</div>
+            <div class="my-course-progress">
+              <div class="progress-bar-sm"><div class="fill" style="width:30%"></div></div>
+              <span class="progress-pct">30%</span>
+            </div>
+            <span class="my-course-btn">Tiếp tục học →</span>
+          </div>
+        </a>
+        <a href="hoc-bai.html" class="my-course">
+          <div class="my-course-thumb grad-5">T.Anh</div>
+          <div class="my-course-info">
+            <div class="my-course-title">KHOÁ E - TỔNG ÔN TIẾNG ANH 2026</div>
+            <div class="my-course-teacher">Cô Kim Ngân</div>
+            <div class="my-course-progress">
+              <div class="progress-bar-sm"><div class="fill" style="width:10%"></div></div>
+              <span class="progress-pct">10%</span>
+            </div>
+            <span class="my-course-btn">Tiếp tục học →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tab: Lịch sử thi -->
+    <div class="tab-panel" id="history">
+      <div class="history-list">
+        <a href="ket-qua-thi.html" class="history-item">
+          <div class="history-icon subj-ly" style="color:var(--subj);background:var(--subj-bg)">Lý</div>
+          <div class="history-info"><div class="history-name">L11014 - Đề kiểm tra vật lí 11 - Đề 26</div><div class="history-detail">40 câu · 42 phút · 21/03/2026</div></div>
+          <div><div class="history-score good">8.0</div><div class="history-date">32/40 đúng</div></div>
+        </a>
+        <a href="ket-qua-thi.html" class="history-item">
+          <div class="history-icon subj-toan" style="color:var(--subj);background:var(--subj-bg)">T</div>
+          <div class="history-info"><div class="history-name">ĐỀ DỰ ĐOÁN SỐ 01 - ĐGNL HSA</div><div class="history-detail">120 câu · 180 phút · 15/03/2026</div></div>
+          <div><div class="history-score mid">6.5</div><div class="history-date">78/120 đúng</div></div>
+        </a>
+        <a href="ket-qua-thi.html" class="history-item">
+          <div class="history-icon subj-hoa" style="color:var(--subj);background:var(--subj-bg)">H</div>
+          <div class="history-info"><div class="history-name">Đề thi thử Hóa THPT 2026 - Đề 5</div><div class="history-detail">40 câu · 48 phút · 10/03/2026</div></div>
+          <div><div class="history-score good">8.5</div><div class="history-date">34/40 đúng</div></div>
+        </a>
+        <a href="ket-qua-thi.html" class="history-item">
+          <div class="history-icon subj-anh" style="color:var(--subj);background:var(--subj-bg)">A</div>
+          <div class="history-info"><div class="history-name">Đề thi thử Tiếng Anh - Đề 15</div><div class="history-detail">50 câu · 55 phút · 05/03/2026</div></div>
+          <div><div class="history-score mid">7.0</div><div class="history-date">35/50 đúng</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tab: Đấu trường -->
+    <div class="tab-panel" id="arena-history">
+      <div class="history-list">
+        <div class="history-item">
+          <div class="history-icon" style="background:var(--accent-light);color:var(--accent)">⚔</div>
+          <div class="history-info"><div class="history-name">Đấu trường lý thuyết – Phần 3</div><div class="history-detail">30 câu · Hoàn thành 20/03/2026</div></div>
+          <div><div class="history-score good">27/30</div><div class="history-date">Hạng #12</div></div>
+        </div>
+        <div class="history-item">
+          <div class="history-icon" style="background:var(--accent-light);color:var(--accent)">⚔</div>
+          <div class="history-info"><div class="history-name">Đấu trường tốc độ – Chơi thử</div><div class="history-detail">30 câu · Hoàn thành 18/03/2026</div></div>
+          <div><div class="history-score mid">22/30</div><div class="history-date">Hạng #45</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div><p class="footer-desc">OnThi365 — Ôn thi mỗi ngày, đỗ đại học mỗi năm.</p></div>
+      <div><h4>Thông tin</h4><div class="footer-links"><a href="#">Giới thiệu</a><a href="#">Điều khoản</a><a href="#">Bảo mật</a></div></div>
+      <div><h4>Khám phá</h4><div class="footer-links"><a href="khoa-hoc.html">Khóa học</a><a href="thi-online.html">Thi online</a><a href="dau-truong.html">Đấu trường</a></div></div>
+      <div><h4>Liên hệ</h4><div class="footer-links"><a href="#">info@onthi365.vn</a><a href="#">0978.xxx.xxx</a></div></div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.dash-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.dash-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

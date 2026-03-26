@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài viết & Kiến thức ôn thi - OnThi365</title>
+<meta name="description" content="Tổng hợp bài viết kinh nghiệm ôn thi, mẹo học tập, lộ trình ôn thi THPT Quốc gia, ĐGNL, ĐGTD 2026 từ OnThi365.">
+<link rel="stylesheet" href="style.css">
+<style>
+main { margin-top: var(--header-h); }
+.page-hero { background:linear-gradient(135deg,#F0F6FF,#E6F0FF);padding:40px 0 32px; }
+.page-hero h1 { font-size:32px;font-weight:800;margin-bottom:8px; }
+.page-hero p { color:var(--gray-500);font-size:15px; }
+
+/* Featured post */
+.featured {
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--gray-200);
+  background:var(--white);margin-bottom:40px;transition:all 0.3s;
+}
+.featured:hover { box-shadow:var(--shadow-lg); }
+.featured-thumb { background:linear-gradient(135deg,#0066FF,#00C2FF);display:flex;align-items:center;justify-content:center;min-height:280px; }
+.featured-thumb span { color:#fff;font-size:20px;font-weight:800;padding:32px;text-align:center; }
+.featured-body { padding:32px;display:flex;flex-direction:column;justify-content:center; }
+.featured-body .blog-cat { margin-bottom:12px; }
+.featured-body h2 { font-size:22px;font-weight:800;line-height:1.35;margin-bottom:10px;color:var(--gray-900); }
+.featured-body p { font-size:14px;color:var(--gray-500);line-height:1.7;margin-bottom:16px; }
+.featured-body .meta { font-size:12px;color:var(--gray-400);display:flex;gap:8px; }
+.featured-body .read-more {
+  display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:600;
+  color:var(--brand);margin-top:12px;
+}
+.featured-body .read-more:hover { gap:8px; }
+
+/* Blog grid */
+.blog-grid {
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;
+}
+.blog-card { display:flex;flex-direction:column;background:var(--white);border-radius:var(--radius-md);border:1px solid var(--gray-200);overflow:hidden;transition:all 0.3s; }
+.blog-card:hover { box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:transparent; }
+.blog-thumb { aspect-ratio:16/10;overflow:hidden; }
+.blog-thumb-ph {
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:#fff;padding:16px;text-align:center;
+  transition:transform 0.4s;
+}
+.blog-card:hover .blog-thumb-ph { transform:scale(1.05); }
+.blog-body { padding:16px;flex:1;display:flex;flex-direction:column; }
+.blog-cat { display:inline-flex;align-self:flex-start; }
+.blog-title {
+  font-size:15px;font-weight:700;line-height:1.45;color:var(--gray-900);
+  margin:8px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  flex:1;
+}
+.blog-excerpt {
+  font-size:13px;color:var(--gray-500);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:12px;
+}
+.blog-meta-row { display:flex;gap:6px;font-size:12px;color:var(--gray-400); }
+
+/* Sidebar */
+.blog-layout { display:grid;grid-template-columns:1fr 300px;gap:32px;padding:0 0 80px; }
+.blog-sidebar { position:sticky;top:calc(var(--header-h)+20px);align-self:start; }
+
+.sidebar-box {
+  background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-md);
+  padding:20px;margin-bottom:20px;
+}
+.sidebar-box h3 { font-size:14px;font-weight:700;margin-bottom:14px;color:var(--gray-900); }
+.sidebar-tag {
+  display:inline-flex;padding:6px 14px;border-radius:var(--radius-full);
+  font-size:12px;font-weight:600;border:1px solid var(--gray-200);
+  color:var(--gray-600);margin:0 4px 6px 0;transition:all 0.2s;
+}
+.sidebar-tag:hover { border-color:var(--brand);color:var(--brand); }
+.popular-item {
+  display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--gray-100);
+}
+.popular-item:last-child { border-bottom:none; }
+.popular-num { font-size:18px;font-weight:800;color:var(--gray-200);width:24px;flex-shrink:0; }
+.popular-title { font-size:13px;font-weight:500;color:var(--gray-700);line-height:1.4; }
+.popular-title:hover { color:var(--brand); }
+
+.pagination { display:flex;align-items:center;justify-content:center;gap:6px;margin-top:40px; }
+.page-btn { width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--gray-600);border:1px solid var(--gray-200);transition:all 0.2s; }
+.page-btn:hover { border-color:var(--brand);color:var(--brand); }
+.page-btn.active { background:var(--brand);color:#fff;border-color:var(--brand); }
+
+@media(max-width:900px) {
+  .featured { grid-template-columns:1fr; }
+  .blog-layout { grid-template-columns:1fr; }
+  .blog-sidebar { position:static; }
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dang-nhap.html" class="btn-brand">Đăng nhập</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link">Khóa học</a>
+    <a href="thi-online.html" class="sub-link">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link active">Bài viết</a>
+    <a href="dashboard.html" class="sub-link">Lớp học của tôi</a>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero">
+    <div class="container">
+      <h1>Bài viết & Kiến thức</h1>
+      <p>Kinh nghiệm ôn thi, mẹo học tập, phân tích đề thi và lộ trình ôn luyện hiệu quả</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:32px">
+    <!-- Featured -->
+    <a href="chi-tiet-bai-viet.html" class="featured">
+      <div class="featured-thumb"><span>Lộ trình ôn thi THPT 2026</span></div>
+      <div class="featured-body">
+        <span class="blog-cat tag tag-brand">Nổi bật</span>
+        <h2>Lộ trình ôn thi THPT Quốc gia 2026 hiệu quả trong 6 tháng</h2>
+        <p>Hướng dẫn chi tiết cách phân bổ thời gian cho từng môn, chọn tài liệu phù hợp, phương pháp ôn thi khoa học giúp đạt 8+ điểm mỗi môn. Áp dụng cho cả học sinh trung bình và khá.</p>
+        <div class="meta"><span>22/03/2026</span><span>·</span><span>5 phút đọc</span><span>·</span><span>12,340 lượt xem</span></div>
+        <span class="read-more">Đọc tiếp →</span>
+      </div>
+    </a>
+
+    <!-- Layout -->
+    <div class="blog-layout">
+      <div>
+        <div class="tabs" style="margin-bottom:24px">
+          <button class="tab active">Tất cả</button>
+          <button class="tab">Kinh nghiệm</button>
+          <button class="tab">Vật lý</button>
+          <button class="tab">Toán</button>
+          <button class="tab">Hóa</button>
+          <button class="tab">Tiếng Anh</button>
+          <button class="tab">ĐGNL/ĐGTD</button>
+        </div>
+
+        <div class="blog-grid">
+          <a href="chi-tiet-bai-viet.html" class="blog-card"><div class="blog-thumb"><div class="blog-thumb-ph grad-3">Mẹo Vật lý</div></div><div class="blog-body"><span class="blog-cat tag tag-accent">Vật lý</span><h3 class="blog-title">Top 10 công thức Vật lý 12 quan trọng nhất trong đề thi THPT</h3><p class="blog-excerpt">Tổng hợp công thức xuất hiện nhiều nhất qua 5 năm đề thi, kèm ví dụ áp dụng...</p><div class="blog-meta-row"><span>20/03/2026</span><span>·</span><span>8 phút</span><span>·</span><span>8,921 lượt</span></div></div></a>
+
+          <a href="chi-tiet-bai-viet.html" class="blog-card"><div class="blog-thumb"><div class="blog-thumb-ph grad-5">So sánh kỳ thi</div></div><div class="blog-body"><span class="blog-cat tag tag-gray">Tư vấn</span><h3 class="blog-title">So sánh ĐGNL (HSA) và ĐGTD (TSA): Nên thi kỳ nào năm 2026?</h3><p class="blog-excerpt">Phân tích chi tiết cấu trúc đề, độ khó, cơ hội xét tuyển từng kỳ thi...</p><div class="blog-meta-row"><span>18/03/2026</span><span>·</span><span>6 phút</span><span>·</span><span>15,678 lượt</span></div></div></a>
+
+          <a href="chi-tiet-bai-viet.html" class="blog-card"><div class="blog-thumb"><div class="blog-thumb-ph grad-6">Toán THPT</div></div><div class="blog-body"><span class="blog-cat tag tag-warning">Toán</span><h3 class="blog-title">Phương pháp giải nhanh bài toán hàm số bằng máy tính Casio</h3><p class="blog-excerpt">5 kỹ thuật bấm máy giải bài hàm số trong 30 giây, kèm bài tập...</p><div class="blog-meta-row"><span>15/03/2026</span><span>·</span><span>7 phút</span><span>·</span><span>6,543 lượt</span></div></div></a>
+
+          <a href="chi-tiet-bai-viet.html" class="blog-card"><div class="blog-thumb"><div class="blog-thumb-ph grad-4">Tiếng Anh</div></div><div class="blog-body"><span class="blog-cat tag tag-brand">Tiếng Anh</span><h3 class="blog-title">50 cặp từ đồng nghĩa thường gặp trong đề thi Tiếng Anh THPT</h3><p class="blog-excerpt">Danh sách từ vựng hay bẫy nhất trong phần đọc hiểu và từ vựng...</p><div class="blog-meta-row"><span>12/03/2026</span><span>·</span><span>10 phút</span><span>·</span><span>9,123 lượt</span></div></div></a>
+
+          <a href="chi-tiet-bai-viet.html" class="blog-card"><div class="blog-thumb"><div class="blog-thumb-ph grad-1">Kinh nghiệm</div></div><div class="blog-body"><span class="blog-cat tag tag-success">Kinh nghiệm</span><h3 class="blog-title">Cách quản lý thời gian hiệu quả khi làm bài thi trắc nghiệm</h3><p class="blog-excerpt">Chiến thuật phân bổ thời gian, thứ tự làm bài và cách đoán đáp án...</p><div class="blog-meta-row"><span>10/03/2026</span><span>·</span><span>4 phút</span><span>·</span><span>7,456 lượt</span></div></div></a>
+
+          <a href="chi-tiet-bai-viet.html" class="blog-card"><div class="blog-thumb"><div class="blog-thumb-ph grad-2">Hóa học</div></div><div class="blog-body"><span class="blog-cat tag tag-accent">Hóa học</span><h3 class="blog-title">Bảng tính tan và cách ghi nhớ nhanh bằng thơ</h3><p class="blog-excerpt">Phương pháp ghi nhớ bảng tính tan qua câu thơ vui nhộn, không bao giờ quên...</p><div class="blog-meta-row"><span>08/03/2026</span><span>·</span><span>5 phút</span><span>·</span><span>11,234 lượt</span></div></div></a>
+        </div>
+
+        <div class="pagination">
+          <button class="page-btn active">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">...</button><button class="page-btn">15</button><button class="page-btn">→</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="blog-sidebar">
+        <div class="sidebar-box">
+          <h3>Chủ đề</h3>
+          <a href="#" class="sidebar-tag">Kinh nghiệm ôn thi</a>
+          <a href="#" class="sidebar-tag">Vật lý</a>
+          <a href="#" class="sidebar-tag">Toán</a>
+          <a href="#" class="sidebar-tag">Hóa học</a>
+          <a href="#" class="sidebar-tag">Tiếng Anh</a>
+          <a href="#" class="sidebar-tag">Sinh học</a>
+          <a href="#" class="sidebar-tag">Ngữ văn</a>
+          <a href="#" class="sidebar-tag">ĐGNL HSA</a>
+          <a href="#" class="sidebar-tag">ĐGTD TSA</a>
+          <a href="#" class="sidebar-tag">Mẹo làm bài</a>
+          <a href="#" class="sidebar-tag">Lộ trình</a>
+        </div>
+
+        <div class="sidebar-box">
+          <h3>Bài viết phổ biến</h3>
+          <a href="#" class="popular-item"><span class="popular-num">1</span><span class="popular-title">Lộ trình ôn thi THPT 2026 trong 6 tháng</span></a>
+          <a href="#" class="popular-item"><span class="popular-num">2</span><span class="popular-title">So sánh ĐGNL và ĐGTD 2026</span></a>
+          <a href="#" class="popular-item"><span class="popular-num">3</span><span class="popular-title">Top 10 công thức Vật lý quan trọng nhất</span></a>
+          <a href="#" class="popular-item"><span class="popular-num">4</span><span class="popular-title">50 cặp từ đồng nghĩa Tiếng Anh THPT</span></a>
+          <a href="#" class="popular-item"><span class="popular-num">5</span><span class="popular-title">Cách quản lý thời gian làm bài thi</span></a>
+        </div>
+
+        <div class="sidebar-box" style="background:var(--brand);border-color:var(--brand);color:#fff">
+          <h3 style="color:#fff">Bắt đầu ôn thi ngay!</h3>
+          <p style="font-size:13px;opacity:0.8;margin-bottom:12px">Xem thử khóa học miễn phí, thi online không cần đăng ký.</p>
+          <a href="khoa-hoc.html" style="display:inline-flex;padding:8px 18px;border-radius:var(--radius-sm);background:#fff;color:var(--brand);font-size:13px;font-weight:700">Xem khóa học →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div><p class="footer-desc">OnThi365 — Ôn thi mỗi ngày, đỗ đại học mỗi năm.</p></div>
+      <div><h4>Thông tin</h4><div class="footer-links"><a href="#">Giới thiệu</a><a href="#">Điều khoản</a><a href="#">Bảo mật</a></div></div>
+      <div><h4>Khám phá</h4><div class="footer-links"><a href="khoa-hoc.html">Khóa học</a><a href="thi-online.html">Thi online</a><a href="bai-viet.html">Bài viết</a></div></div>
+      <div><h4>Liên hệ</h4><div class="footer-links"><a href="#">info@onthi365.vn</a><a href="#">0978.xxx.xxx</a></div></div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.tab').forEach(c=>c.addEventListener('click',()=>{document.querySelector('.tab.active')?.classList.remove('active');c.classList.add('active')}));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}}),{threshold:0.05});
+document.querySelectorAll('.blog-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(12px)';el.style.transition='opacity 0.4s,transform 0.4s';obs.observe(el)});
+</script>
+</body>
+</html>

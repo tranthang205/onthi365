@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 1: Đại cương dao động điều hoà - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body { background: var(--gray-50); }
+main { margin-top: var(--header-h); }
+.learn-layout { display:grid;grid-template-columns:1fr 320px;min-height:calc(100vh - var(--header-h)); }
+.learn-main { display:flex;flex-direction:column;overflow-y:auto; }
+
+/* Video */
+.video-wrap { background:#0a0a0a;position:relative;width:100%; }
+.video-container { position:relative;width:100%;max-width:960px;margin:0 auto;aspect-ratio:16/9; }
+.video-player {
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,#1a1a2e,#0a0a0a);cursor:pointer;
+}
+.play-overlay { display:flex;flex-direction:column;align-items:center;gap:12px;transition:all 0.3s; }
+.play-overlay:hover .play-btn { transform:scale(1.1);background:var(--brand); }
+.play-btn {
+  width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;border:2px solid rgba(255,255,255,0.15);
+}
+.play-label { font-size:13px;color:rgba(255,255,255,0.4);font-weight:500; }
+
+.video-bar {
+  background:#111118;padding:10px 20px;display:flex;align-items:center;gap:12px;
+  max-width:960px;margin:0 auto;width:100%;
+}
+.vb-btn { width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);transition:all 0.15s;flex-shrink:0; }
+.vb-btn:hover { background:rgba(255,255,255,0.08);color:#fff; }
+.vb-time { font-size:12px;color:rgba(255,255,255,0.4);font-weight:500;white-space:nowrap; }
+.vb-progress { flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;cursor:pointer;position:relative; }
+.vb-progress-fill { height:100%;width:35%;background:var(--brand);border-radius:2px;position:relative; }
+.vb-progress-fill::after { content:'';position:absolute;right:-5px;top:-3px;width:10px;height:10px;border-radius:50%;background:var(--brand);opacity:0;transition:opacity 0.2s; }
+.vb-progress:hover .vb-progress-fill::after { opacity:1; }
+.vb-speed { padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.12);cursor:pointer; }
+.vb-speed:hover { color:#fff;border-color:rgba(255,255,255,0.3); }
+
+/* Lesson panel */
+.lesson-panel { background:var(--white);border-top:1px solid var(--gray-200);flex:1; }
+.lesson-nav {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 24px;border-bottom:1px solid var(--gray-100);background:var(--gray-50);
+}
+.nav-btn { display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--gray-500);padding:6px 12px;border-radius:var(--radius-sm);transition:all 0.2s; }
+.nav-btn:hover { color:var(--brand);background:var(--brand-light); }
+.nav-btn.disabled { opacity:0.3;pointer-events:none; }
+.lesson-counter { font-size:12px;color:var(--gray-400);font-weight:600;display:flex;align-items:center;gap:8px; }
+.lesson-counter .dot { width:6px;height:6px;border-radius:50%;background:var(--success); }
+
+.lesson-header { padding:20px 24px 0; }
+.lesson-breadcrumb { font-size:12px;color:var(--gray-400);margin-bottom:6px; }
+.lesson-breadcrumb a { color:var(--brand); }
+.lesson-title { font-size:20px;font-weight:800;color:var(--gray-900);margin-bottom:4px;line-height:1.35; }
+.lesson-meta-bar { display:flex;align-items:center;gap:16px;margin-top:8px;font-size:12px;color:var(--gray-400); }
+.lesson-meta-bar .mi { display:flex;align-items:center;gap:4px; }
+
+.lesson-actions { display:flex;gap:8px;flex-wrap:wrap;padding:16px 24px 0; }
+.la-btn { padding:9px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:all 0.2s;display:flex;align-items:center;gap:6px; }
+.la-btn.done { background:var(--success);color:#fff; }
+.la-btn.done:hover { background:#059669; }
+.la-btn.outline { border:1.5px solid var(--gray-200);color:var(--gray-600); }
+.la-btn.outline:hover { border-color:var(--brand);color:var(--brand); }
+
+.lesson-tabs { display:flex;gap:0;border-bottom:2px solid var(--gray-100);padding:0 24px;margin-top:16px; }
+.lesson-tab { padding:10px 18px;font-size:13px;font-weight:600;color:var(--gray-400);border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:all 0.2s; }
+.lesson-tab:hover { color:var(--gray-700); }
+.lesson-tab.active { color:var(--brand);border-bottom-color:var(--brand); }
+.ltp { display:none;padding:20px 24px; }
+.ltp.active { display:block;animation:fadeUp 0.3s ease-out; }
+.lesson-desc { font-size:14px;color:var(--gray-600);line-height:1.75;margin-bottom:20px; }
+.lesson-point { display:flex;align-items:flex-start;gap:10px;padding:6px 0;font-size:14px;color:var(--gray-600); }
+.lesson-point::before { content:'✓';color:var(--success);font-weight:700;flex-shrink:0;margin-top:1px; }
+.note-area { width:100%;min-height:120px;padding:14px;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);font-size:14px;line-height:1.6;resize:vertical;transition:border-color 0.2s; }
+.note-area:focus { outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,102,255,0.06); }
+.note-save { margin-top:10px;padding:8px 20px;border-radius:var(--radius-sm);background:var(--brand);color:#fff;font-size:13px;font-weight:600; }
+.note-hint { font-size:12px;color:var(--gray-400);margin-top:8px; }
+
+/* Sidebar */
+.sidebar { background:var(--white);border-left:1px solid var(--gray-200);display:flex;flex-direction:column;overflow:hidden;max-height:calc(100vh - var(--header-h));position:sticky;top:var(--header-h); }
+.sb-header { padding:16px 18px;border-bottom:1px solid var(--gray-100);flex-shrink:0; }
+.sb-title { font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between; }
+.sb-pct { font-size:12px;font-weight:700;color:var(--brand); }
+.sb-progress { height:4px;background:var(--gray-100);border-radius:2px;overflow:hidden; }
+.sb-progress-fill { height:100%;background:var(--brand);border-radius:2px;transition:width 0.5s; }
+.sb-stats { display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--gray-400); }
+.sb-chapters { flex:1;overflow-y:auto;scrollbar-width:thin; }
+.sb-chapter { border-bottom:1px solid var(--gray-100); }
+.sb-ch-header { padding:11px 18px;font-size:13px;font-weight:700;color:var(--gray-700);background:var(--gray-50);cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.15s;user-select:none; }
+.sb-ch-header:hover { background:var(--gray-100); }
+.ch-count { font-size:11px;font-weight:500;color:var(--gray-400); }
+.sb-ch-header .arr { font-size:10px;color:var(--gray-400);transition:transform 0.2s;margin-left:8px; }
+.sb-chapter.open .arr { transform:rotate(180deg); }
+.sb-lessons { display:none; }
+.sb-chapter.open .sb-lessons { display:block; }
+.sb-lesson { display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13px;color:var(--gray-600);cursor:pointer;transition:all 0.12s;border-left:3px solid transparent; }
+.sb-lesson:hover { background:var(--gray-50); }
+.sb-lesson.active { background:var(--brand-lighter);color:var(--brand);font-weight:600;border-left-color:var(--brand); }
+.sb-lesson.done { color:var(--success); }
+.sb-lesson .ico { width:18px;text-align:center;flex-shrink:0;font-size:11px;color:var(--gray-400); }
+.sb-lesson.done .ico { color:var(--success); }
+.sb-lesson .name { flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.sb-lesson .dur { font-size:11px;color:var(--gray-400);flex-shrink:0; }
+
+@media(max-width:960px) {
+  .learn-layout { grid-template-columns:1fr; }
+  .sidebar { position:static;max-height:none;border-left:none;border-top:1px solid var(--gray-200); }
+  .sb-chapters { max-height:400px; }
+}
+</style>
+</head>
+<body>
+<header class="header scrolled">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></a>
+    <nav class="nav"><a href="dashboard.html" class="nav-link">← Lớp học của tôi</a></nav>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost" style="font-size:12px">Kích hoạt thẻ</a>
+      <div style="display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;background:var(--gray-50);border-radius:var(--radius-full);border:1px solid var(--gray-200)">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">NH</div>
+        <span style="font-size:12px;font-weight:600;color:var(--gray-700)">Nguyễn Huy</span>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="learn-layout">
+    <div class="learn-main">
+      <div class="video-wrap">
+        <div class="video-container">
+          <div class="video-player" onclick="this.querySelector('.play-overlay').style.display='none'">
+            <div class="play-overlay"><div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div><span class="play-label">Nhấn để phát video</span></div>
+          </div>
+        </div>
+        <div class="video-bar">
+          <button class="vb-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></button>
+          <span class="vb-time">08:45</span>
+          <div class="vb-progress"><div class="vb-progress-fill"></div></div>
+          <span class="vb-time">25:30</span>
+          <button class="vb-speed">1x</button>
+          <button class="vb-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg></button>
+        </div>
+      </div>
+
+      <div class="lesson-panel">
+        <div class="lesson-nav">
+          <button class="nav-btn disabled"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7-7 7 7 7"/></svg> Bài trước</button>
+          <div class="lesson-counter"><span class="dot"></span> Bài 1 / 18 · Chương 1</div>
+          <button class="nav-btn">Bài tiếp <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></button>
+        </div>
+
+        <div class="lesson-header">
+          <div class="lesson-breadcrumb"><a href="dashboard.html">Lớp học</a> › <a href="#">Vật lý 2026</a> › Chương 1</div>
+          <h1 class="lesson-title">Bài 1: Đại cương về dao động điều hoà</h1>
+          <div class="lesson-meta-bar">
+            <span class="mi">⏱ 25:30</span>
+            <span class="mi">📘 Chương 1: Dao động cơ</span>
+            <span class="mi">👨‍🏫 Thầy Vũ Ngọc Anh</span>
+          </div>
+        </div>
+
+        <div class="lesson-actions">
+          <button class="la-btn done">✓ Đánh dấu đã học</button>
+          <button class="la-btn outline">📝 Bài tập chương này</button>
+          <button class="la-btn outline">↓ Tải slide</button>
+        </div>
+
+        <div class="lesson-tabs">
+          <div class="lesson-tab active" data-tab="overview">Tổng quan</div>
+          <div class="lesson-tab" data-tab="notes">Ghi chú</div>
+          <div class="lesson-tab" data-tab="discuss">Hỏi đáp</div>
+        </div>
+
+        <div class="ltp active" id="overview">
+          <div class="lesson-desc">Trong bài này, chúng ta sẽ tìm hiểu các khái niệm cơ bản nhất về dao động điều hoà — nền tảng cho toàn bộ chương Dao động cơ.</div>
+          <div class="lesson-point">Phương trình dao động: x = Acos(ωt + φ)</div>
+          <div class="lesson-point">Ý nghĩa của biên độ A, tần số góc ω, pha ban đầu φ</div>
+          <div class="lesson-point">Mối liên hệ giữa chu kỳ T, tần số f, tần số góc ω</div>
+          <div class="lesson-point">Vận tốc và gia tốc trong dao động điều hoà</div>
+          <div class="lesson-point">Đồ thị x(t), v(t), a(t) và cách đọc đồ thị</div>
+        </div>
+        <div class="ltp" id="notes">
+          <textarea class="note-area" placeholder="Ghi chú trong lúc xem bài giảng..."></textarea>
+          <button class="note-save">Lưu ghi chú</button>
+          <div class="note-hint">Ghi chú được lưu riêng cho từng bài, xem lại bất cứ lúc nào.</div>
+        </div>
+        <div class="ltp" id="discuss">
+          <div style="text-align:center;padding:32px 0;color:var(--gray-400)">
+            <div style="font-size:32px;margin-bottom:8px;opacity:0.3">💬</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px">Hỏi đáp</div>
+            <div style="font-size:13px">Đặt câu hỏi về bài học này, giáo viên sẽ giải đáp.</div>
+            <button style="margin-top:16px;padding:8px 20px;border-radius:var(--radius-sm);background:var(--brand);color:#fff;font-size:13px;font-weight:600">Đặt câu hỏi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="sb-header">
+        <div class="sb-title"><span>Nội dung khóa học</span><span class="sb-pct">15%</span></div>
+        <div class="sb-progress"><div class="sb-progress-fill" style="width:15%"></div></div>
+        <div class="sb-stats"><span>📹 18/120 bài</span><span>⏱ ~45h còn lại</span></div>
+      </div>
+      <div class="sb-chapters">
+        <div class="sb-chapter open">
+          <div class="sb-ch-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 1: Dao động cơ <span class="ch-count">(3/18)</span></span><span class="arr">▼</span></div>
+          <div class="sb-lessons">
+            <div class="sb-lesson active"><span class="ico">▶</span><span class="name">Bài 1: Đại cương dao động điều hòa</span><span class="dur">25:30</span></div>
+            <div class="sb-lesson done"><span class="ico">✓</span><span class="name">Bài 2: Con lắc lò xo</span><span class="dur">32:15</span></div>
+            <div class="sb-lesson done"><span class="ico">✓</span><span class="name">Bài 3: Con lắc đơn</span><span class="dur">28:40</span></div>
+            <div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 4: Năng lượng dao động</span><span class="dur">30:10</span></div>
+            <div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 5: Tổng hợp dao động</span><span class="dur">35:00</span></div>
+            <div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 6: Dao động tắt dần, cưỡng bức</span><span class="dur">28:00</span></div>
+            <div class="sb-lesson"><span class="ico">📝</span><span class="name">Bài tập: Dao động (40 câu)</span><span class="dur"></span></div>
+          </div>
+        </div>
+        <div class="sb-chapter"><div class="sb-ch-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 2: Sóng cơ <span class="ch-count">(0/15)</span></span><span class="arr">▼</span></div><div class="sb-lessons"><div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 1: Đại cương sóng cơ</span><span class="dur">22:45</span></div><div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 2: Giao thoa sóng</span><span class="dur">35:20</span></div></div></div>
+        <div class="sb-chapter"><div class="sb-ch-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 3: Dòng điện xoay chiều <span class="ch-count">(0/20)</span></span><span class="arr">▼</span></div><div class="sb-lessons"><div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 1: Mạch RLC</span><span class="dur">40:00</span></div></div></div>
+        <div class="sb-chapter"><div class="sb-ch-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 4: Sóng điện từ <span class="ch-count">(0/10)</span></span><span class="arr">▼</span></div><div class="sb-lessons"><div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 1: Mạch dao động LC</span><span class="dur">26:00</span></div></div></div>
+        <div class="sb-chapter"><div class="sb-ch-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 5: Lượng tử ánh sáng <span class="ch-count">(0/12)</span></span><span class="arr">▼</span></div><div class="sb-lessons"><div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 1: Hiện tượng quang điện</span><span class="dur">33:00</span></div></div></div>
+        <div class="sb-chapter"><div class="sb-ch-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 6: Vật lý hạt nhân <span class="ch-count">(0/14)</span></span><span class="arr">▼</span></div><div class="sb-lessons"><div class="sb-lesson"><span class="ico">▶</span><span class="name">Bài 1: Cấu tạo hạt nhân</span><span class="dur">29:00</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+document.querySelectorAll('.lesson-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.lesson-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.ltp').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+document.querySelectorAll('.sb-lesson').forEach(l=>{
+  l.addEventListener('click',()=>{
+    document.querySelectorAll('.sb-lesson').forEach(s=>s.classList.remove('active'));
+    l.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

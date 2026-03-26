@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KHOÁ I - Chuyên đề cơ bản Vật lý 2026 - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main { margin-top: var(--header-h); }
+.breadcrumb { padding: 12px 0; font-size: 13px; color: var(--gray-400); }
+.breadcrumb a { color: var(--gray-500); }
+.breadcrumb a:hover { color: var(--brand); }
+
+.detail-layout {
+  display: grid; grid-template-columns: 1fr 360px; gap: 40px;
+  padding-bottom: 80px;
+}
+
+/* Left content */
+.detail-hero {
+  border-radius: var(--radius-lg); overflow: hidden;
+  aspect-ratio: 16/9; margin-bottom: 28px;
+}
+.detail-hero-ph {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800; color: #fff;
+}
+.detail-tags { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.detail-title { font-size: 28px; font-weight: 800; line-height: 1.3; margin-bottom: 12px; color: var(--gray-900); }
+.detail-desc { font-size: 15px; color: var(--gray-500); line-height: 1.7; margin-bottom: 28px; }
+.detail-teacher {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 32px;
+  padding: 16px; background: var(--gray-50); border-radius: var(--radius-md);
+}
+.detail-teacher-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: #fff; font-size: 16px;
+}
+.detail-teacher-name { font-size: 15px; font-weight: 600; }
+.detail-teacher-sub { font-size: 13px; color: var(--gray-400); }
+
+/* Stats */
+.detail-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px;
+}
+.stat-card {
+  text-align: center; padding: 16px; background: var(--gray-50);
+  border-radius: var(--radius-md);
+}
+.stat-card .val { font-size: 22px; font-weight: 800; color: var(--brand); }
+.stat-card .lbl { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+/* Curriculum */
+.curriculum { margin-bottom: 40px; }
+.curriculum h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+.chapter {
+  border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  margin-bottom: 10px; overflow: hidden;
+}
+.chapter-header {
+  padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; background: var(--gray-50); font-weight: 600; font-size: 14px;
+  transition: background 0.2s;
+}
+.chapter-header:hover { background: var(--gray-100); }
+.chapter-header .arrow { transition: transform 0.3s; font-size: 12px; color: var(--gray-400); }
+.chapter.open .chapter-header .arrow { transform: rotate(180deg); }
+.chapter-body { display: none; }
+.chapter.open .chapter-body { display: block; }
+.lesson {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 18px; font-size: 13px; color: var(--gray-600);
+  border-top: 1px solid var(--gray-100);
+  transition: background 0.2s;
+}
+.lesson:hover { background: var(--brand-lighter); }
+.lesson-icon { font-size: 16px; flex-shrink: 0; }
+.lesson-free {
+  margin-left: auto; font-size: 11px; font-weight: 700;
+  color: var(--success); background: var(--success-light);
+  padding: 2px 8px; border-radius: var(--radius-full);
+}
+.lesson-lock { margin-left: auto; color: var(--gray-300); font-size: 14px; }
+.lesson-dur { font-size: 12px; color: var(--gray-400); margin-left: auto; }
+
+/* Right sidebar - Purchase card */
+.purchase-card {
+  position: sticky; top: calc(var(--header-h) + 20px);
+  background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-lg);
+}
+.purchase-price {
+  font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 4px;
+}
+.purchase-original {
+  font-size: 16px; color: var(--gray-400); text-decoration: line-through;
+}
+.purchase-discount {
+  display: inline-flex; padding: 3px 10px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 700; background: var(--danger-light); color: var(--danger);
+  margin-left: 8px;
+}
+.purchase-cta {
+  display: block; width: 100%; padding: 14px; border-radius: var(--radius-md);
+  font-size: 16px; font-weight: 700; text-align: center;
+  margin-top: 20px; transition: all 0.2s;
+}
+.purchase-cta.primary { background: var(--accent); color: #fff; }
+.purchase-cta.primary:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,107,44,0.3); }
+.purchase-cta.secondary {
+  background: var(--white); color: var(--brand); border: 1.5px solid var(--brand);
+  margin-top: 10px;
+}
+.purchase-cta.secondary:hover { background: var(--brand-light); }
+.purchase-features { margin-top: 20px; }
+.purchase-feature {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--gray-600); padding: 6px 0;
+}
+.purchase-feature::before {
+  content: '✓'; color: var(--success); font-weight: 700; font-size: 14px;
+}
+.purchase-note {
+  margin-top: 16px; padding: 12px; background: var(--warning-light);
+  border-radius: var(--radius-sm); font-size: 12px; color: var(--gray-600); line-height: 1.5;
+}
+.purchase-note strong { color: var(--warning); }
+
+/* Reviews */
+.reviews h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+.review-card {
+  padding: 18px; border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+  margin-bottom: 12px;
+}
+.review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.review-avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--brand-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--brand);
+}
+.review-name { font-size: 14px; font-weight: 600; }
+.review-date { font-size: 12px; color: var(--gray-400); }
+.review-stars { color: #F59E0B; font-size: 13px; letter-spacing: 1px; }
+.review-text { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .detail-layout { grid-template-columns: 1fr; }
+  .purchase-card { position: static; }
+  .detail-stats { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dang-nhap.html" class="btn-brand">Đăng nhập</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link active">Khóa học</a>
+    <a href="thi-online.html" class="sub-link">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link">Bài viết</a>
+    <a href="dashboard.html" class="sub-link">Lớp học của tôi</a>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Trang chủ</a> › <a href="khoa-hoc.html">Khóa học</a> › <span>Chuyên đề cơ bản Vật lý 2026</span>
+    </div>
+
+    <div class="detail-layout">
+      <!-- Left content -->
+      <div>
+        <div class="detail-hero"><div class="detail-hero-ph grad-1">KHOÁ I - CHUYÊN ĐỀ CƠ BẢN VẬT LÝ 2026</div></div>
+
+        <div class="detail-tags">
+          <span class="tag tag-brand">Vật lý</span>
+          <span class="tag tag-accent">2K8 - Lớp 12</span>
+          <span class="tag tag-success">Best Seller</span>
+        </div>
+
+        <h1 class="detail-title">KHOÁ I - CHUYÊN ĐỀ CƠ BẢN MÔN VẬT LÝ NĂM 2026</h1>
+        <p class="detail-desc">Khóa học xây dựng nền tảng vững chắc cho học sinh lớp 12, bao gồm đầy đủ các chuyên đề trọng tâm: Dao động cơ, Sóng cơ, Sóng điện từ, Dòng điện xoay chiều, Lượng tử ánh sáng, Vật lý hạt nhân. Mỗi chuyên đề có video bài giảng chi tiết + bài tập phân loại từ cơ bản đến nâng cao.</p>
+
+        <div class="detail-teacher">
+          <div class="detail-teacher-avatar grad-1">VA</div>
+          <div><div class="detail-teacher-name">Thầy Vũ Ngọc Anh</div><div class="detail-teacher-sub">Giáo viên Vật lý · 12 năm kinh nghiệm luyện thi</div></div>
+        </div>
+
+        <div class="detail-stats">
+          <div class="stat-card"><div class="val">120+</div><div class="lbl">Video bài giảng</div></div>
+          <div class="stat-card"><div class="val">500+</div><div class="lbl">Bài tập</div></div>
+          <div class="stat-card"><div class="val">3,200+</div><div class="lbl">Học sinh</div></div>
+          <div class="stat-card"><div class="val">4.8★</div><div class="lbl">Đánh giá</div></div>
+        </div>
+
+        <!-- Curriculum -->
+        <div class="curriculum">
+          <h2>Nội dung khóa học</h2>
+
+          <div class="chapter open">
+            <div class="chapter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span>Chương 1: Dao động cơ (18 bài)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="chapter-body">
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 1: Đại cương về dao động điều hoà <span class="lesson-dur">25:30</span><span class="lesson-free">Xem thử</span></div>
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 2: Con lắc lò xo <span class="lesson-dur">32:15</span><span class="lesson-free">Xem thử</span></div>
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 3: Con lắc đơn <span class="lesson-dur">28:40</span><span class="lesson-lock">🔒</span></div>
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 4: Năng lượng dao động <span class="lesson-dur">30:10</span><span class="lesson-lock">🔒</span></div>
+              <div class="lesson"><span class="lesson-icon">📝</span> Bài tập: Dao động điều hoà (40 câu) <span class="lesson-lock">🔒</span></div>
+            </div>
+          </div>
+
+          <div class="chapter">
+            <div class="chapter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span>Chương 2: Sóng cơ (15 bài)</span><span class="arrow">▼</span>
+            </div>
+            <div class="chapter-body">
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 1: Đại cương về sóng cơ <span class="lesson-dur">22:45</span><span class="lesson-lock">🔒</span></div>
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 2: Giao thoa sóng <span class="lesson-dur">35:20</span><span class="lesson-lock">🔒</span></div>
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 3: Sóng dừng <span class="lesson-dur">28:00</span><span class="lesson-lock">🔒</span></div>
+            </div>
+          </div>
+
+          <div class="chapter">
+            <div class="chapter-header" onclick="this.parentElement.classList.toggle('open')">
+              <span>Chương 3: Dòng điện xoay chiều (20 bài)</span><span class="arrow">▼</span>
+            </div>
+            <div class="chapter-body">
+              <div class="lesson"><span class="lesson-icon">▶</span> Bài 1: Mạch RLC <span class="lesson-dur">40:00</span><span class="lesson-lock">🔒</span></div>
+            </div>
+          </div>
+
+          <div class="chapter">
+            <div class="chapter-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 4: Sóng điện từ (10 bài)</span><span class="arrow">▼</span></div><div class="chapter-body"><div class="lesson"><span class="lesson-icon">▶</span> Bài 1: Mạch dao động LC <span class="lesson-lock">🔒</span></div></div>
+          </div>
+          <div class="chapter">
+            <div class="chapter-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 5: Lượng tử ánh sáng (12 bài)</span><span class="arrow">▼</span></div><div class="chapter-body"><div class="lesson"><span class="lesson-icon">▶</span> Bài 1: Hiện tượng quang điện <span class="lesson-lock">🔒</span></div></div>
+          </div>
+          <div class="chapter">
+            <div class="chapter-header" onclick="this.parentElement.classList.toggle('open')"><span>Chương 6: Vật lý hạt nhân (14 bài)</span><span class="arrow">▼</span></div><div class="chapter-body"><div class="lesson"><span class="lesson-icon">▶</span> Bài 1: Cấu tạo hạt nhân <span class="lesson-lock">🔒</span></div></div>
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="reviews">
+          <h2>Đánh giá từ học sinh (128 đánh giá)</h2>
+          <div class="review-card">
+            <div class="review-header"><div class="review-avatar">NH</div><div><div class="review-name">Nguyễn Huy</div><div class="review-date">15/03/2026</div></div></div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">Thầy giảng rất dễ hiểu, bài tập phân loại rõ ràng. Mình từ 5 điểm lý lên 8.5 sau 3 tháng học.</div>
+          </div>
+          <div class="review-card">
+            <div class="review-header"><div class="review-avatar">TL</div><div><div class="review-name">Trần Linh</div><div class="review-date">10/03/2026</div></div></div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">Khóa học đầy đủ, có cả video lẫn bài tập. Mình thích nhất phần chữa bài chi tiết của thầy.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purchase sidebar -->
+      <div>
+        <div class="purchase-card">
+          <div class="purchase-price">499.000đ</div>
+          <div>
+            <span class="purchase-original">990.000đ</span>
+            <span class="purchase-discount">-50%</span>
+          </div>
+
+          <a href="kich-hoat.html" class="purchase-cta primary">Mua khóa học ngay</a>
+          <a href="hoc-bai.html" class="purchase-cta secondary">Xem thử 2 bài miễn phí</a>
+
+          <div class="purchase-features">
+            <div class="purchase-feature">120+ video bài giảng HD</div>
+            <div class="purchase-feature">500+ bài tập phân loại</div>
+            <div class="purchase-feature">Xem không giới hạn 12 tháng</div>
+            <div class="purchase-feature">Hỗ trợ giải đáp thắc mắc</div>
+            <div class="purchase-feature">Cập nhật nội dung liên tục</div>
+            <div class="purchase-feature">Học trên mọi thiết bị</div>
+          </div>
+
+          <div class="purchase-note">
+            <strong>💡 Cách mua:</strong> Mua thẻ kích hoạt qua chuyển khoản hoặc ví điện tử → Nhập mã thẻ → Mở khóa ngay lập tức.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div><p class="footer-desc">OnThi365 — Ôn thi mỗi ngày, đỗ đại học mỗi năm.</p></div>
+      <div><h4>Thông tin</h4><div class="footer-links"><a href="#">Giới thiệu</a><a href="#">Điều khoản</a><a href="#">Bảo mật</a></div></div>
+      <div><h4>Khám phá</h4><div class="footer-links"><a href="khoa-hoc.html">Khóa học</a><a href="thi-online.html">Thi online</a><a href="dau-truong.html">Đấu trường</a></div></div>
+      <div><h4>Liên hệ</h4><div class="footer-links"><a href="#">info@onthi365.vn</a><a href="#">0978.xxx.xxx</a></div></div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365. All rights reserved.</div>
+  </div>
+</footer>
+</body>
+</html>

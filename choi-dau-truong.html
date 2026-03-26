@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đấu trường lý thuyết - Đang chơi - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body { background:var(--gray-950);color:#fff;overflow:hidden; }
+main { height:100vh;display:flex;flex-direction:column; }
+
+/* Top bar */
+.arena-bar {
+  padding:12px 24px;background:rgba(255,255,255,0.04);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.arena-bar-left { display:flex;align-items:center;gap:16px; }
+.arena-bar .logo-text { color:#fff;font-size:18px; }
+.arena-name { font-size:14px;font-weight:600;color:rgba(255,255,255,0.5); }
+.arena-bar-right { display:flex;align-items:center;gap:20px; }
+.arena-q-count { font-size:14px;font-weight:700;color:var(--accent); }
+.arena-score-live { font-size:14px;font-weight:700;color:var(--success); }
+.arena-quit {
+  padding:6px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);transition:all 0.2s;
+}
+.arena-quit:hover { border-color:var(--danger);color:var(--danger); }
+
+/* Question area */
+.arena-main { flex:1;display:flex;align-items:center;justify-content:center;padding:20px; }
+.arena-question-card {
+  width:100%;max-width:640px;animation:scaleIn 0.4s ease-out;
+}
+
+/* Timer ring */
+.timer-ring-wrap {
+  width:80px;height:80px;margin:0 auto 24px;position:relative;
+}
+.timer-ring { transform:rotate(-90deg); }
+.timer-ring-bg { fill:none;stroke:rgba(255,255,255,0.08);stroke-width:6; }
+.timer-ring-fill {
+  fill:none;stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:226;stroke-dashoffset:0;
+  transition:stroke-dashoffset 1s linear;
+}
+.timer-ring-fill.normal { stroke:var(--brand); }
+.timer-ring-fill.warning { stroke:var(--warning); }
+.timer-ring-fill.danger { stroke:var(--danger);animation:pulse 0.5s infinite; }
+.timer-num {
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:28px;font-weight:900;
+}
+
+/* Question */
+.arena-q-text {
+  font-size:20px;font-weight:700;text-align:center;line-height:1.5;
+  margin-bottom:32px;padding:0 10px;
+}
+
+/* Options */
+.arena-options { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.arena-opt {
+  padding:16px 20px;border-radius:var(--radius-md);
+  border:2px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);
+  font-size:15px;font-weight:600;color:#fff;text-align:left;
+  transition:all 0.2s;display:flex;align-items:center;gap:12px;cursor:pointer;
+}
+.arena-opt:hover { border-color:var(--brand);background:rgba(0,102,255,0.1); }
+.arena-opt .letter {
+  width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;
+  flex-shrink:0;transition:all 0.3s;
+}
+.arena-opt.selected { border-color:var(--brand);background:rgba(0,102,255,0.15); }
+.arena-opt.selected .letter { background:var(--brand); }
+.arena-opt.correct { border-color:var(--success);background:rgba(16,185,129,0.15); }
+.arena-opt.correct .letter { background:var(--success); }
+.arena-opt.wrong { border-color:var(--danger);background:rgba(239,68,68,0.15); }
+.arena-opt.wrong .letter { background:var(--danger); }
+.arena-opt.disabled { pointer-events:none;opacity:0.5; }
+
+/* Feedback overlay */
+.feedback {
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  z-index:100;pointer-events:none;opacity:0;transition:opacity 0.3s;
+}
+.feedback.show { opacity:1; }
+.feedback-icon {
+  width:120px;height:120px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:56px;animation:scaleIn 0.3s ease-out;
+}
+.feedback-icon.correct { background:rgba(16,185,129,0.2);backdrop-filter:blur(20px); }
+.feedback-icon.wrong { background:rgba(239,68,68,0.2);backdrop-filter:blur(20px); }
+
+/* Progress dots */
+.arena-progress {
+  padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:4px;
+  flex-wrap:wrap;
+}
+.prog-dot {
+  width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.1);
+  transition:all 0.3s;
+}
+.prog-dot.correct { background:var(--success); }
+.prog-dot.wrong { background:var(--danger); }
+.prog-dot.current { background:var(--brand);box-shadow:0 0 8px var(--brand);transform:scale(1.3); }
+
+@media(max-width:600px) {
+  .arena-options { grid-template-columns:1fr; }
+  .arena-q-text { font-size:17px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Feedback overlay -->
+<div class="feedback" id="feedback">
+  <div class="feedback-icon" id="feedbackIcon"></div>
+</div>
+
+<main>
+  <!-- Top bar -->
+  <div class="arena-bar">
+    <div class="arena-bar-left">
+      <a href="index.html" class="logo" style="gap:6px"><div class="logo-mark" style="width:30px;height:30px;border-radius:6px;font-size:11px"></div><div class="logo-text" style="font-size:16px">OnThi<span>365</span></div></a>
+      <span class="arena-name">Đấu trường lý thuyết – Phần 3</span>
+    </div>
+    <div class="arena-bar-right">
+      <span class="arena-q-count" id="qCount">Câu 1/30</span>
+      <span class="arena-score-live" id="scoreLive">0 điểm</span>
+      <button class="arena-quit" onclick="if(confirm('Bạn muốn thoát?')) location='dau-truong.html'">Thoát</button>
+    </div>
+  </div>
+
+  <!-- Question -->
+  <div class="arena-main">
+    <div class="arena-question-card" id="questionCard">
+      <div class="timer-ring-wrap">
+        <svg class="timer-ring" width="80" height="80" viewBox="0 0 80 80">
+          <circle class="timer-ring-bg" cx="40" cy="40" r="36"/>
+          <circle class="timer-ring-fill normal" id="timerRing" cx="40" cy="40" r="36"/>
+        </svg>
+        <div class="timer-num" id="timerNum">20</div>
+      </div>
+      <div class="arena-q-text" id="qText">Một vật dao động điều hòa với biên độ A. Khi li độ bằng A/2 thì tỉ số giữa động năng và thế năng là:</div>
+      <div class="arena-options" id="options">
+        <button class="arena-opt" data-idx="0" onclick="selectAnswer(this,0)"><span class="letter">A</span><span>1/3</span></button>
+        <button class="arena-opt" data-idx="1" onclick="selectAnswer(this,1)"><span class="letter">B</span><span>3</span></button>
+        <button class="arena-opt" data-idx="2" onclick="selectAnswer(this,2)"><span class="letter">C</span><span>1/4</span></button>
+        <button class="arena-opt" data-idx="3" onclick="selectAnswer(this,3)"><span class="letter">D</span><span>4</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress dots -->
+  <div class="arena-progress" id="progressDots"></div>
+</main>
+
+<script>
+const questions = [
+  {q:"Một vật dao động điều hòa với biên độ A. Khi li độ x = A/2 thì tỉ số Wđ/Wt là:",opts:["1/3","3","1/4","4"],correct:1},
+  {q:"Chu kỳ dao động của con lắc đơn phụ thuộc vào:",opts:["Khối lượng vật","Biên độ dao động","Chiều dài dây treo","Lực cản không khí"],correct:2},
+  {q:"Sóng dọc truyền được trong môi trường nào?",opts:["Chỉ chất rắn","Chỉ chất lỏng","Chỉ chất khí","Rắn, lỏng, khí"],correct:3},
+  {q:"Hiện tượng giao thoa sóng xảy ra khi có:",opts:["Hai sóng bất kỳ gặp nhau","Hai sóng cùng tần số, cùng pha","Hai nguồn kết hợp","Sóng phản xạ"],correct:2},
+  {q:"Trong mạch dao động LC lý tưởng, năng lượng:",opts:["Luôn là động năng","Luôn là thế năng","Chuyển hóa giữa điện và từ","Mất dần theo thời gian"],correct:2},
+  {q:"Hiện tượng quang điện ngoài xảy ra khi:",opts:["Chiếu ánh sáng bất kỳ vào kim loại","λ ≤ λ₀ (giới hạn quang điện)","Cường độ sáng đủ lớn","Chiếu tia X vào kim loại"],correct:1},
+  {q:"Phóng xạ β⁻ là quá trình:",opts:["Hạt nhân phát electron","Hạt nhân phát positron","Hạt nhân phát proton","Hạt nhân phát neutron"],correct:0},
+];
+
+const TOTAL = questions.length;
+const TIME_PER_Q = 20;
+let currentQ = 0, score = 0, answered = false, timer, timeLeft;
+const results = [];
+
+// Init progress dots
+const dotsEl = document.getElementById('progressDots');
+for(let i=0;i<TOTAL;i++){
+  const d = document.createElement('div');
+  d.className = 'prog-dot' + (i===0?' current':'');
+  dotsEl.appendChild(d);
+}
+const dots = dotsEl.querySelectorAll('.prog-dot');
+
+function loadQuestion(idx) {
+  const q = questions[idx];
+  answered = false;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qCount').textContent = `Câu ${idx+1}/${TOTAL}`;
+  const letters = ['A','B','C','D'];
+  const optEl = document.getElementById('options');
+  optEl.innerHTML = q.opts.map((o,i) =>
+    `<button class="arena-opt" onclick="selectAnswer(this,${i})"><span class="letter">${letters[i]}</span><span>${o}</span></button>`
+  ).join('');
+
+  // Reset timer
+  timeLeft = TIME_PER_Q;
+  const ring = document.getElementById('timerRing');
+  const circumference = 2*Math.PI*36;
+  ring.style.transition = 'none';
+  ring.style.strokeDashoffset = '0';
+  ring.className = 'timer-ring-fill normal';
+  document.getElementById('timerNum').textContent = TIME_PER_Q;
+
+  requestAnimationFrame(()=>{
+    ring.style.transition = 'stroke-dashoffset 1s linear';
+    startTimer(ring, circumference);
+  });
+
+  // Update dots
+  dots.forEach((d,i)=>d.classList.toggle('current',i===idx));
+
+  // Animate card
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(()=>card.style.animation = 'scaleIn 0.35s ease-out');
+}
+
+function startTimer(ring, circ) {
+  clearInterval(timer);
+  timer = setInterval(()=>{
+    timeLeft--;
+    document.getElementById('timerNum').textContent = timeLeft;
+    ring.style.strokeDashoffset = circ * (1 - timeLeft/TIME_PER_Q);
+
+    if(timeLeft<=5) ring.className='timer-ring-fill danger';
+    else if(timeLeft<=10) ring.className='timer-ring-fill warning';
+
+    if(timeLeft<=0){
+      clearInterval(timer);
+      if(!answered) timeUp();
+    }
+  },1000);
+}
+
+function timeUp() {
+  answered = true;
+  results.push(false);
+  dots[currentQ].classList.add('wrong');
+  // Show correct answer
+  const opts = document.querySelectorAll('.arena-opt');
+  opts.forEach(o=>o.classList.add('disabled'));
+  opts[questions[currentQ].correct].classList.add('correct');
+  showFeedback(false);
+  setTimeout(nextQuestion, 1500);
+}
+
+function selectAnswer(el, idx) {
+  if(answered) return;
+  answered = true;
+  clearInterval(timer);
+
+  const correct = questions[currentQ].correct;
+  const isCorrect = idx === correct;
+
+  const opts = document.querySelectorAll('.arena-opt');
+  opts.forEach(o=>o.classList.add('disabled'));
+  el.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect) opts[correct].classList.add('correct');
+
+  if(isCorrect) score += 10;
+  results.push(isCorrect);
+  dots[currentQ].classList.add(isCorrect?'correct':'wrong');
+  document.getElementById('scoreLive').textContent = score + ' điểm';
+
+  showFeedback(isCorrect);
+  setTimeout(nextQuestion, 1200);
+}
+
+function showFeedback(isCorrect) {
+  const fb = document.getElementById('feedback');
+  const icon = document.getElementById('feedbackIcon');
+  icon.className = 'feedback-icon ' + (isCorrect?'correct':'wrong');
+  icon.textContent = isCorrect ? '✓' : '✗';
+  fb.classList.add('show');
+  setTimeout(()=>fb.classList.remove('show'), 800);
+}
+
+function nextQuestion() {
+  currentQ++;
+  if(currentQ >= TOTAL) {
+    // Go to results
+    localStorage.setItem('arenaScore', score);
+    localStorage.setItem('arenaTotal', TOTAL);
+    localStorage.setItem('arenaCorrect', results.filter(r=>r).length);
+    window.location = 'ket-qua-dau-truong.html';
+    return;
+  }
+  loadQuestion(currentQ);
+}
+
+loadQuestion(0);
+</script>
+</body>
+</html>

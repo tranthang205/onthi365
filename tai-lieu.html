@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tài liệu - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main { margin-top: var(--header-h); }
+.page-hero { background:linear-gradient(135deg,#FFF7ED,#FFEDD5);padding:40px 0 32px; }
+.page-hero h1 { font-size:32px;font-weight:800;margin-bottom:8px; }
+.page-hero p { color:var(--gray-500);font-size:15px; }
+
+.doc-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; padding: 32px 0 80px;
+}
+.doc-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px; background: var(--white); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); transition: all 0.2s;
+}
+.doc-card:hover { box-shadow: var(--shadow-md); border-color: var(--brand); }
+.doc-icon {
+  width: 48px; height: 48px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.doc-icon.pdf { background: #FEF2F2; color: #DC2626; }
+.doc-icon.doc { background: #EFF6FF; color: #2563EB; }
+.doc-icon.xls { background: #ECFDF5; color: #059669; }
+.doc-info { flex: 1; min-width: 0; }
+.doc-name { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.doc-meta { font-size: 12px; color: var(--gray-400); display: flex; gap: 10px; }
+.doc-dl {
+  padding: 6px 14px; border-radius: var(--radius-sm);
+  font-size: 12px; font-weight: 600; color: var(--brand);
+  background: var(--brand-light); flex-shrink: 0; transition: all 0.2s;
+}
+.doc-dl:hover { background: var(--brand); color: #fff; }
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dang-nhap.html" class="btn-brand">Đăng nhập</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link">Khóa học</a>
+    <a href="thi-online.html" class="sub-link">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link active">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link">Bài viết</a>
+    <a href="dashboard.html" class="sub-link">Lớp học của tôi</a>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero"><div class="container"><h1>Tài liệu ôn thi</h1><p>Tổng hợp tài liệu, đề thi, sách bài tập miễn phí cho học sinh</p></div></div>
+
+  <div class="container">
+    <div class="tabs" style="margin:24px 0">
+      <button class="tab active">Tất cả</button>
+      <button class="tab">Vật lý</button>
+      <button class="tab">Toán</button>
+      <button class="tab">Hóa</button>
+      <button class="tab">Sinh</button>
+      <button class="tab">Tiếng Anh</button>
+      <button class="tab">Ngữ văn</button>
+    </div>
+
+    <div class="doc-grid">
+      <a href="#" class="doc-card"><div class="doc-icon pdf">📄</div><div class="doc-info"><div class="doc-name">Công thức Vật lý 12 - Tóm tắt</div><div class="doc-meta"><span>PDF · 2.3 MB</span><span>1,234 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon pdf">📄</div><div class="doc-info"><div class="doc-name">Đề thi THPT QG 2025 - Vật lý (chính thức)</div><div class="doc-meta"><span>PDF · 1.8 MB</span><span>5,678 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon doc">📘</div><div class="doc-info"><div class="doc-name">Bảng tổng hợp ngữ pháp Tiếng Anh 12</div><div class="doc-meta"><span>DOCX · 3.1 MB</span><span>2,456 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon pdf">📄</div><div class="doc-info"><div class="doc-name">30 đề thi thử Toán THPT 2026</div><div class="doc-meta"><span>PDF · 15 MB</span><span>3,890 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon xls">📊</div><div class="doc-info"><div class="doc-name">Bảng tuần hoàn Hóa học - chi tiết</div><div class="doc-meta"><span>PDF · 0.8 MB</span><span>987 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon pdf">📄</div><div class="doc-info"><div class="doc-name">Tổng hợp 500 từ vựng Tiếng Anh thông dụng</div><div class="doc-meta"><span>PDF · 4.2 MB</span><span>4,321 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon pdf">📄</div><div class="doc-info"><div class="doc-name">Kiến thức trọng tâm Sinh 12 - Di truyền</div><div class="doc-meta"><span>PDF · 5.6 MB</span><span>1,567 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon doc">📘</div><div class="doc-info"><div class="doc-name">Dàn ý nghị luận xã hội - 20 đề mẫu</div><div class="doc-meta"><span>DOCX · 2.1 MB</span><span>2,789 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+
+      <a href="#" class="doc-card"><div class="doc-icon pdf">📄</div><div class="doc-info"><div class="doc-name">Đề thi ĐGNL HSA 2025 - có đáp án</div><div class="doc-meta"><span>PDF · 8.4 MB</span><span>6,123 lượt tải</span></div></div><span class="doc-dl">Tải về</span></a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div><p class="footer-desc">OnThi365 — Ôn thi mỗi ngày.</p></div>
+      <div><h4>Thông tin</h4><div class="footer-links"><a href="#">Giới thiệu</a><a href="#">Điều khoản</a></div></div>
+      <div><h4>Khám phá</h4><div class="footer-links"><a href="khoa-hoc.html">Khóa học</a><a href="thi-online.html">Thi online</a></div></div>
+      <div><h4>Liên hệ</h4><div class="footer-links"><a href="#">info@onthi365.vn</a></div></div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.tab').forEach(c=>c.addEventListener('click',()=>{document.querySelector('.tab.active')?.classList.remove('active');c.classList.add('active')}));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}}),{threshold:0.05});
+document.querySelectorAll('.doc-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(12px)';el.style.transition='opacity 0.4s,transform 0.4s';obs.observe(el)});
+</script>
+</body>
+</html>

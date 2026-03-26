@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sẵn sàng đấu trường - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:var(--gray-950);color:#fff}
+main{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.arena-confirm{width:100%;max-width:520px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:40px;text-align:center;animation:scaleIn 0.4s ease-out;position:relative;overflow:hidden}
+.arena-confirm::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,44,0.06),transparent 70%)}
+.arena-confirm .icon{font-size:48px;margin-bottom:16px;position:relative}
+.arena-confirm h1{font-size:24px;font-weight:900;margin-bottom:6px;position:relative}
+.arena-confirm h1 span{color:var(--accent)}
+.arena-confirm .desc{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:28px;position:relative}
+.arena-info{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px;position:relative}
+.arena-info-item{padding:16px;background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+.arena-info-item .val{font-size:22px;font-weight:800;color:#fff}
+.arena-info-item .lbl{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px}
+.arena-rules{text-align:left;padding:16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:28px;font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;position:relative}
+.arena-rules strong{color:rgba(255,255,255,0.7)}
+.arena-actions{display:flex;gap:10px;justify-content:center;position:relative}
+.btn-play{padding:14px 40px;border-radius:12px;font-size:16px;font-weight:800;background:var(--accent);color:#fff;transition:all 0.2s;box-shadow:0 4px 20px rgba(255,107,44,0.3)}
+.btn-play:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,44,0.4)}
+.btn-arena-back{padding:14px 20px;border-radius:12px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.1);transition:all 0.2s}
+.btn-arena-back:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <div class="arena-confirm">
+    <div class="icon">⚔️</div>
+    <h1>Đấu trường <span>lý thuyết – Phần 3</span></h1>
+    <p class="desc">Trả lời nhanh, chính xác — leo bảng xếp hạng!</p>
+    <div class="arena-info">
+      <div class="arena-info-item"><div class="val">30</div><div class="lbl">Câu hỏi</div></div>
+      <div class="arena-info-item"><div class="val">20s</div><div class="lbl">Mỗi câu</div></div>
+      <div class="arena-info-item"><div class="val">5,794</div><div class="lbl">Người chơi</div></div>
+    </div>
+    <div class="arena-rules">
+      <strong>Luật chơi:</strong> Mỗi câu có 20 giây để trả lời. Trả lời đúng +10 điểm. Hết giờ hoặc sai = 0 điểm. Không thể quay lại câu trước. Kết quả xếp hạng ngay sau khi hoàn thành.
+    </div>
+    <div class="arena-actions">
+      <a href="dau-truong.html" class="btn-arena-back">← Quay lại</a>
+      <a href="choi-dau-truong.html" class="btn-play">Bắt đầu chơi →</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Làm bài thi - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body { background: var(--gray-50); }
+main { margin-top: var(--header-h); padding: 24px 0 80px; }
+
+/* Exam header */
+.exam-header-bar {
+  background: var(--white); border-bottom: 1px solid var(--gray-200);
+  padding: 12px 0; position: sticky; top: var(--header-h); z-index: 50;
+}
+.exam-header-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.exam-title-bar { font-size: 15px; font-weight: 700; color: var(--gray-800); }
+.timer {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; background: var(--danger-light); border-radius: var(--radius-full);
+  font-size: 16px; font-weight: 800; color: var(--danger);
+}
+.timer.warning { animation: pulse 1s infinite; }
+.submit-btn {
+  padding: 8px 24px; border-radius: var(--radius-sm);
+  background: var(--brand); color: #fff; font-size: 14px; font-weight: 700;
+  transition: all 0.2s;
+}
+.submit-btn:hover { background: var(--brand-dark); }
+
+/* Layout */
+.exam-layout { display: grid; grid-template-columns: 1fr 280px; gap: 24px; margin-top: 24px; }
+
+/* Questions */
+.question-card {
+  background: var(--white); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); padding: 24px; margin-bottom: 16px;
+}
+.q-number { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 8px; }
+.q-text { font-size: 15px; font-weight: 500; line-height: 1.7; color: var(--gray-800); margin-bottom: 16px; }
+.q-options { display: flex; flex-direction: column; gap: 8px; }
+.q-option {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s;
+  font-size: 14px; line-height: 1.5;
+}
+.q-option:hover { border-color: var(--brand); background: var(--brand-lighter); }
+.q-option.selected { border-color: var(--brand); background: var(--brand-light); }
+.q-option .letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gray-100); color: var(--gray-600);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.q-option.selected .letter { background: var(--brand); color: #fff; }
+
+/* Question navigator sidebar */
+.q-navigator {
+  position: sticky; top: calc(var(--header-h) + 60px); align-self: start;
+  background: var(--white); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); padding: 20px;
+}
+.q-navigator h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--gray-700); }
+.q-nav-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 16px;
+}
+.q-nav-btn {
+  width: 100%; aspect-ratio: 1; border-radius: var(--radius-xs);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; border: 1px solid var(--gray-200);
+  color: var(--gray-500); transition: all 0.2s;
+}
+.q-nav-btn:hover { border-color: var(--brand); }
+.q-nav-btn.answered { background: var(--brand); color: #fff; border-color: var(--brand); }
+.q-nav-btn.current { border-color: var(--accent); border-width: 2px; color: var(--accent); font-weight: 800; }
+
+.q-legend { display: flex; gap: 16px; font-size: 11px; color: var(--gray-400); flex-wrap: wrap; }
+.q-legend span { display: flex; align-items: center; gap: 4px; }
+.q-legend .dot { width: 10px; height: 10px; border-radius: 3px; }
+
+.progress-info { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+.progress-bar {
+  height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; margin-top: 8px;
+}
+.progress-fill { height: 100%; background: var(--brand); border-radius: 3px; transition: width 0.3s; }
+.progress-text { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .exam-layout { grid-template-columns: 1fr; }
+  .q-navigator { position: static; }
+}
+</style>
+</head>
+<body>
+
+<header class="header scrolled">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></a>
+    <div class="header-actions">
+      <a href="thi-online.html" class="btn-ghost">← Quay lại</a>
+    </div>
+  </div>
+</header>
+
+<!-- Exam bar -->
+<div class="exam-header-bar" style="margin-top:var(--header-h)">
+  <div class="exam-header-inner">
+    <div class="exam-title-bar">L11014 - Đề kiểm tra vật lí 11 - Đề 26</div>
+    <div class="timer" id="timer">⏱ 49:32</div>
+    <button class="submit-btn" onclick="if(confirm('Bạn chắc chắn muốn nộp bài?')) window.location='ket-qua-thi.html'">Nộp bài</button>
+  </div>
+</div>
+
+<main style="margin-top:0">
+  <div class="container">
+    <div class="exam-layout">
+      <!-- Questions -->
+      <div>
+        <div class="question-card">
+          <div class="q-number">Câu 1 / 40</div>
+          <div class="q-text">Một vật dao động điều hòa với phương trình x = 5cos(2πt + π/3) cm. Biên độ dao động của vật là:</div>
+          <div class="q-options">
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">A</span><span>A = 5 cm</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">B</span><span>A = 10 cm</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">C</span><span>A = 2π cm</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">D</span><span>A = π/3 cm</span></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="q-number">Câu 2 / 40</div>
+          <div class="q-text">Chu kỳ dao động của con lắc đơn có chiều dài l tại nơi có gia tốc trọng trường g là:</div>
+          <div class="q-options">
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">A</span><span>T = 2π√(g/l)</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">B</span><span>T = 2π√(l/g)</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">C</span><span>T = 2π√(m/k)</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">D</span><span>T = 1/f</span></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="q-number">Câu 3 / 40</div>
+          <div class="q-text">Sóng cơ là gì?</div>
+          <div class="q-options">
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">A</span><span>Dao động lan truyền trong một môi trường vật chất</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">B</span><span>Sự truyền chuyển động của các phần tử</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">C</span><span>Sự truyền năng lượng trong chân không</span></div>
+            <div class="q-option" onclick="this.parentElement.querySelectorAll('.q-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')"><span class="letter">D</span><span>Sự truyền vật chất giữa các điểm</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigator -->
+      <div class="q-navigator">
+        <h3>Danh sách câu hỏi</h3>
+        <div class="q-nav-grid">
+          <button class="q-nav-btn current">1</button>
+          <button class="q-nav-btn">2</button>
+          <button class="q-nav-btn">3</button>
+          <button class="q-nav-btn">4</button>
+          <button class="q-nav-btn">5</button>
+          <button class="q-nav-btn">6</button>
+          <button class="q-nav-btn">7</button>
+          <button class="q-nav-btn">8</button>
+          <button class="q-nav-btn">9</button>
+          <button class="q-nav-btn">10</button>
+          <button class="q-nav-btn">11</button>
+          <button class="q-nav-btn">12</button>
+          <button class="q-nav-btn">13</button>
+          <button class="q-nav-btn">14</button>
+          <button class="q-nav-btn">15</button>
+          <button class="q-nav-btn">16</button>
+          <button class="q-nav-btn">17</button>
+          <button class="q-nav-btn">18</button>
+          <button class="q-nav-btn">19</button>
+          <button class="q-nav-btn">20</button>
+          <button class="q-nav-btn">21</button>
+          <button class="q-nav-btn">22</button>
+          <button class="q-nav-btn">23</button>
+          <button class="q-nav-btn">24</button>
+          <button class="q-nav-btn">25</button>
+          <button class="q-nav-btn">26</button>
+          <button class="q-nav-btn">27</button>
+          <button class="q-nav-btn">28</button>
+          <button class="q-nav-btn">29</button>
+          <button class="q-nav-btn">30</button>
+          <button class="q-nav-btn">31</button>
+          <button class="q-nav-btn">32</button>
+          <button class="q-nav-btn">33</button>
+          <button class="q-nav-btn">34</button>
+          <button class="q-nav-btn">35</button>
+          <button class="q-nav-btn">36</button>
+          <button class="q-nav-btn">37</button>
+          <button class="q-nav-btn">38</button>
+          <button class="q-nav-btn">39</button>
+          <button class="q-nav-btn">40</button>
+        </div>
+
+        <div class="q-legend">
+          <span><span class="dot" style="background:var(--brand)"></span> Đã trả lời</span>
+          <span><span class="dot" style="border:1.5px solid var(--accent);background:transparent"></span> Đang xem</span>
+          <span><span class="dot" style="border:1px solid var(--gray-200);background:transparent"></span> Chưa trả lời</span>
+        </div>
+
+        <div class="progress-info">
+          <div style="font-size:13px;font-weight:600;color:var(--gray-700)">Tiến độ: <span id="answered">0</span>/40</div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+          <div class="progress-text">Hoàn thành 0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Timer countdown
+let time = 49*60+32;
+const timerEl = document.getElementById('timer');
+setInterval(()=>{
+  if(time<=0){window.location='ket-qua-thi.html';return;}
+  time--;
+  const m=Math.floor(time/60),s=time%60;
+  timerEl.textContent=`⏱ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if(time<300) timerEl.classList.add('warning');
+},1000);
+</script>
+</body>
+</html>

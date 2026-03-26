@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanh toán thành công - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:var(--gray-50)}
+main{margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.success-card{width:100%;max-width:480px;background:var(--white);border-radius:var(--radius-xl);padding:44px 36px;box-shadow:var(--shadow-xl);border:1px solid var(--gray-100);text-align:center;animation:scaleIn 0.5s ease-out}
+.check-circle{width:80px;height:80px;border-radius:50%;background:var(--success-light);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;animation:scaleIn 0.5s ease-out 0.2s both}
+.check-circle svg{width:40px;height:40px;color:var(--success)}
+.success-card h1{font-size:24px;font-weight:800;color:var(--gray-900);margin-bottom:8px}
+.success-card .sub{font-size:14px;color:var(--gray-500);margin-bottom:28px}
+.code-display{padding:18px;background:var(--gray-50);border-radius:var(--radius-md);border:2px dashed var(--brand);margin-bottom:24px}
+.code-display .label{font-size:12px;color:var(--gray-400);margin-bottom:6px}
+.code-display .code{font-size:28px;font-weight:900;letter-spacing:4px;color:var(--brand);font-family:'Courier New',monospace}
+.code-display .hint{font-size:12px;color:var(--gray-400);margin-top:6px}
+.order-summary{text-align:left;padding:16px;background:var(--gray-50);border-radius:var(--radius-md);margin-bottom:24px;font-size:13px}
+.order-row{display:flex;justify-content:space-between;padding:5px 0;color:var(--gray-600)}
+.order-row.total{border-top:1px solid var(--gray-200);margin-top:8px;padding-top:10px;font-weight:700;color:var(--gray-900);font-size:15px}
+.success-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.sa-btn{padding:12px 24px;border-radius:var(--radius-md);font-size:14px;font-weight:700;transition:all 0.2s}
+.sa-btn.primary{background:var(--brand);color:#fff}
+.sa-btn.primary:hover{background:var(--brand-dark)}
+.sa-btn.outline{border:1.5px solid var(--gray-200);color:var(--gray-600)}
+.sa-btn.outline:hover{border-color:var(--brand);color:var(--brand)}
+</style>
+</head>
+<body>
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Tìm khóa học, đề thi, tài liệu..."></div>
+    <div class="header-actions"><a href="dashboard.html" class="btn-brand">Lớp học của tôi</a></div>
+  </div>
+</header>
+<main>
+  <div class="success-card">
+    <div class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h1>Thanh toán thành công!</h1>
+    <p class="sub">Mã thẻ kích hoạt đã được tạo. Bạn có thể kích hoạt ngay hoặc lưu lại.</p>
+    <div class="code-display">
+      <div class="label">Mã kích hoạt của bạn</div>
+      <div class="code">AB3K-X9F2-7HMN</div>
+      <div class="hint">Mã này cũng đã được gửi qua Zalo/SMS</div>
+    </div>
+    <div class="order-summary">
+      <div class="order-row"><span>Khóa học</span><span>Chuyên đề cơ bản Vật lý 2026</span></div>
+      <div class="order-row"><span>Thanh toán qua</span><span>MoMo</span></div>
+      <div class="order-row"><span>Thời hạn</span><span>12 tháng</span></div>
+      <div class="order-row total"><span>Tổng</span><span style="color:var(--accent)">499.000đ</span></div>
+    </div>
+    <div class="success-actions">
+      <a href="kich-hoat.html" class="sa-btn primary">Kích hoạt ngay →</a>
+      <a href="dashboard.html" class="sa-btn outline">Về lớp học</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thi online miễn phí - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main { margin-top: var(--header-h); }
+.page-hero { background: linear-gradient(135deg, #ECFDF5, #D1FAE5); padding: 40px 0 32px; }
+.page-hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+.page-hero .highlight { color: var(--success); }
+.page-hero p { color: var(--gray-500); font-size: 15px; }
+
+.filters-bar {
+  display: flex; gap: 10px; flex-wrap: wrap; padding: 20px 0;
+  border-bottom: 1px solid var(--gray-200); margin-bottom: 24px;
+}
+.filter-chip {
+  padding: 7px 16px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 600; border: 1.5px solid var(--gray-200);
+  color: var(--gray-600); background: var(--white); transition: all 0.2s;
+}
+.filter-chip:hover { border-color: var(--brand); color: var(--brand); }
+.filter-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+.filter-select {
+  padding: 7px 14px; border-radius: var(--radius-full);
+  font-size: 13px; border: 1.5px solid var(--gray-200); color: var(--gray-600);
+  background: var(--white);
+}
+
+.exam-list { display: flex; flex-direction: column; gap: 12px; }
+
+.exam-card-lg {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center;
+  padding: 20px; background: var(--white); border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200); transition: all 0.2s;
+}
+.exam-card-lg:hover { box-shadow: var(--shadow-md); border-color: var(--brand); }
+.exam-card-lg .icon-col {
+  width: 52px; height: 52px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; color: var(--subj); background: var(--subj-bg);
+}
+.exam-card-lg .info { min-width: 0; }
+.exam-card-lg .name { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--gray-800); }
+.exam-card-lg .details { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--gray-400); align-items: center; }
+.exam-card-lg .action-col { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.exam-card-lg .views { font-size: 12px; color: var(--gray-400); }
+.exam-card-lg .date { font-size: 12px; color: var(--gray-400); }
+.btn-start {
+  padding: 8px 20px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; color: var(--brand);
+  background: var(--brand-light); transition: all 0.2s;
+}
+.btn-start:hover { background: var(--brand); color: #fff; }
+
+.pagination { display:flex;align-items:center;justify-content:center;gap:6px;margin-top:40px; }
+.page-btn { width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--gray-600);border:1px solid var(--gray-200);transition:all 0.2s; }
+.page-btn:hover { border-color:var(--brand);color:var(--brand); }
+.page-btn.active { background:var(--brand);color:#fff;border-color:var(--brand); }
+</style>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input placeholder="Tìm khóa học, đề thi, tài liệu...">
+    </div>
+    <div class="header-actions">
+      <a href="kich-hoat.html" class="btn-ghost">Kích hoạt thẻ</a>
+      <a href="thi-online.html" class="btn-accent-sm">Thi online miễn phí</a>
+      <a href="dang-nhap.html" class="btn-brand">Đăng nhập</a>
+    </div>
+  </div>
+  <div class="header-sub">
+    <a href="index.html" class="sub-link">Trang chủ</a>
+    <a href="khoa-hoc.html" class="sub-link">Khóa học</a>
+    <a href="thi-online.html" class="sub-link active">Thi online</a>
+    <a href="dau-truong.html" class="sub-link">Đấu trường</a>
+    <a href="tai-lieu.html" class="sub-link">Tài liệu</a>
+    <a href="bai-viet.html" class="sub-link">Bài viết</a>
+    <a href="dashboard.html" class="sub-link">Lớp học của tôi</a>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero">
+    <div class="container">
+      <h1>Thi online <span class="highlight">miễn phí</span></h1>
+      <p>Chọn môn → Chọn đề → Làm bài → Nộp bài → Hệ thống chấm điểm & phân tích tự động</p>
+      <!-- Flow steps -->
+      <div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(5,150,105,0.15);border-radius:100px;font-size:12px;font-weight:700;color:var(--success)">
+          <span style="width:20px;height:20px;border-radius:50%;background:var(--success);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px">1</span>
+          Chọn môn & đề
+        </div>
+        <div style="color:var(--gray-300);display:flex;align-items:center">→</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(0,102,255,0.1);border-radius:100px;font-size:12px;font-weight:700;color:var(--brand)">
+          <span style="width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px">2</span>
+          Làm bài thi
+        </div>
+        <div style="color:var(--gray-300);display:flex;align-items:center">→</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(255,107,44,0.1);border-radius:100px;font-size:12px;font-weight:700;color:var(--accent)">
+          <span style="width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px">3</span>
+          Chấm điểm tự động
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="filters-bar">
+      <button class="filter-chip active">Tất cả</button>
+      <button class="filter-chip">THPT</button>
+      <button class="filter-chip">HSA</button>
+      <button class="filter-chip">V-ACT</button>
+      <select class="filter-select"><option>Môn học</option><option>Vật lý</option><option>Toán</option><option>Hóa</option><option>Sinh</option><option>Anh</option></select>
+      <select class="filter-select"><option>Thành phố</option><option>Hà Nội</option><option>TP.HCM</option><option>Đà Nẵng</option></select>
+      <input type="text" placeholder="Tìm đề thi..." style="padding:7px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius-full);font-size:13px;flex:1;min-width:160px">
+    </div>
+
+    <div class="exam-list">
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-ly"><div class="icon-col">Lý</div><div class="info"><div class="name">L11014 - Đề kiểm tra định kỳ vật lí 11 - Đề 26 - OnThi365</div><div class="details"><span class="tag tag-brand">THPT</span><span>Vật lý</span><span>50 phút</span><span>40 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">896 lượt · 21/03/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-ly"><div class="icon-col">Lý</div><div class="info"><div class="name">L10012 - Đề kiểm tra bắt buộc vật lí 10 - Đề 21 - OnThi365</div><div class="details"><span class="tag tag-brand">THPT</span><span>Vật lý</span><span>50 phút</span><span>40 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">1,325 lượt · 14/03/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-toan"><div class="icon-col">T</div><div class="info"><div class="name">ĐỀ DỰ ĐOÁN SỐ 01 - KỲ THI ĐGNL HSA - OnThi365</div><div class="details"><span class="tag tag-accent">HSA</span><span>Tổng hợp</span><span>195 phút</span><span>120 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">10,418 lượt · 03/03/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-hoa"><div class="icon-col">H</div><div class="info"><div class="name">ĐỀ DỰ ĐOÁN SỐ 01 - KỲ THI ĐGNL VACT - OnThi365</div><div class="details"><span class="tag tag-accent">V-ACT</span><span>Tổng hợp</span><span>150 phút</span><span>100 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">4,987 lượt · 03/03/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-ly"><div class="icon-col">Lý</div><div class="info"><div class="name">L11012 - Đề kiểm tra định kỳ vật lí 11 - Đề 24</div><div class="details"><span class="tag tag-brand">THPT</span><span>Vật lý</span><span>50 phút</span><span>40 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">1,825 lượt · 28/02/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-anh"><div class="icon-col">A</div><div class="info"><div class="name">Đề thi thử Tiếng Anh THPT 2026 - Đề số 15</div><div class="details"><span class="tag tag-brand">THPT</span><span>Tiếng Anh</span><span>60 phút</span><span>50 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">2,341 lượt · 25/02/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-toan"><div class="icon-col">T</div><div class="info"><div class="name">Đề kiểm tra Toán 12 - Giải tích - Đề 10</div><div class="details"><span class="tag tag-brand">THPT</span><span>Toán</span><span>90 phút</span><span>50 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">1,567 lượt · 20/02/2026</span></div></a>
+
+      <a href="xac-nhan-thi.html" class="exam-card-lg subj-sinh"><div class="icon-col">S</div><div class="info"><div class="name">Đề kiểm tra Sinh học 12 - Di truyền - Đề 8</div><div class="details"><span class="tag tag-brand">THPT</span><span>Sinh</span><span>50 phút</span><span>40 câu</span></div></div><div class="action-col"><span class="btn-start">Làm bài</span><span class="views">890 lượt · 18/02/2026</span></div></a>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn active">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">...</button><button class="page-btn">11</button><button class="page-btn">→</button>
+    </div>
+  </div>
+</main>
+
+<footer class="footer" style="margin-top:60px">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<span>365</span></div></div><p class="footer-desc">OnThi365 — Ôn thi mỗi ngày, đỗ đại học mỗi năm.</p></div>
+      <div><h4>Thông tin</h4><div class="footer-links"><a href="#">Giới thiệu</a><a href="#">Điều khoản</a></div></div>
+      <div><h4>Khám phá</h4><div class="footer-links"><a href="khoa-hoc.html">Khóa học</a><a href="thi-online.html">Thi online</a></div></div>
+      <div><h4>Liên hệ</h4><div class="footer-links"><a href="#">info@onthi365.vn</a></div></div>
+    </div>
+    <div class="footer-bottom">© 2026 OnThi365</div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.filter-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelector('.filter-chip.active')?.classList.remove('active');c.classList.add('active')}));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}}),{threshold:0.05});
+document.querySelectorAll('.exam-card-lg').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(12px)';el.style.transition='opacity 0.4s,transform 0.4s';obs.observe(el)});
+</script>
+</body>
+</html>

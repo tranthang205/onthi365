@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xác nhận đề thi - OnThi365</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:var(--gray-50)}
+main{margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.confirm-card{width:100%;max-width:560px;background:var(--white);border-radius:var(--radius-xl);padding:40px;box-shadow:var(--shadow-xl);border:1px solid var(--gray-100);animation:scaleIn 0.4s ease-out;text-align:center}
+.confirm-icon{width:64px;height:64px;border-radius:16px;background:var(--brand-light);color:var(--brand);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:28px}
+.confirm-card h1{font-size:22px;font-weight:800;margin-bottom:8px;color:var(--gray-900)}
+.confirm-card .sub{font-size:14px;color:var(--gray-500);margin-bottom:28px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;text-align:left}
+.info-item{padding:14px;background:var(--gray-50);border-radius:var(--radius-md)}
+.info-item .label{font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.info-item .value{font-size:16px;font-weight:700;color:var(--gray-800)}
+.rules{text-align:left;padding:18px;background:var(--warning-light);border-radius:var(--radius-md);margin-bottom:24px}
+.rules h3{font-size:13px;font-weight:700;color:var(--warning);margin-bottom:8px}
+.rules ul{font-size:13px;color:var(--gray-600);line-height:1.7;padding-left:18px;list-style:disc}
+.confirm-actions{display:flex;gap:10px;justify-content:center}
+.btn-start{padding:14px 36px;border-radius:var(--radius-md);font-size:16px;font-weight:700;background:var(--brand);color:#fff;transition:all 0.2s;box-shadow:0 4px 14px rgba(0,102,255,0.25)}
+.btn-start:hover{background:var(--brand-dark);transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,102,255,0.3)}
+.btn-back{padding:14px 24px;border-radius:var(--radius-md);font-size:14px;font-weight:600;color:var(--gray-600);border:1.5px solid var(--gray-200);transition:all 0.2s}
+.btn-back:hover{border-color:var(--brand);color:var(--brand)}
+</style>
+</head>
+<body>
+<header class="header" id="header">
+  <div class="header-top">
+    <a href="index.html" class="logo"><div class="logo-mark"></div><div class="logo-text">OnThi<em>365</em></div></a>
+    <div class="header-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input placeholder="Tìm khóa học, đề thi, tài liệu..."></div>
+    <div class="header-actions"><a href="thi-online.html" class="btn-ghost">← Quay lại</a></div>
+  </div>
+</header>
+<main>
+  <div class="confirm-card">
+    <div class="confirm-icon">📝</div>
+    <h1>Sẵn sàng làm bài?</h1>
+    <p class="sub">Kiểm tra thông tin đề thi trước khi bắt đầu</p>
+    <div class="info-grid">
+      <div class="info-item"><div class="label">Đề thi</div><div class="value">L11014 - Vật lí 11 Đề 26</div></div>
+      <div class="info-item"><div class="label">Phân loại</div><div class="value">THPT · Vật lý</div></div>
+      <div class="info-item"><div class="label">Số câu</div><div class="value">40 câu trắc nghiệm</div></div>
+      <div class="info-item"><div class="label">Thời gian</div><div class="value">50 phút</div></div>
+    </div>
+    <div class="rules">
+      <h3>Lưu ý</h3>
+      <ul>
+        <li>Thời gian bắt đầu đếm ngay khi bấm "Bắt đầu"</li>
+        <li>Hết giờ hệ thống sẽ tự động nộp bài</li>
+        <li>Có thể quay lại sửa đáp án trước khi nộp</li>
+        <li>Kết quả và đáp án chi tiết sẽ hiển thị ngay sau khi nộp</li>
+      </ul>
+    </div>
+    <div class="confirm-actions">
+      <a href="thi-online.html" class="btn-back">Quay lại</a>
+      <a href="lam-bai-thi.html" class="btn-start">Bắt đầu làm bài →</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
